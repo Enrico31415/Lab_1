@@ -1,0 +1,2435 @@
+\documentclass[11pt,a4paper]{book}
+\usepackage[makeindex]{imakeidx}
+\usepackage{microtype}
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\makeindex
+\usepackage{graphicx}
+% New definition of square root:
+% it renames \sqrt as \oldsqrt
+\let\oldsqrt\sqrt
+% it defines the new \sqrt in terms of the old one
+\def\sqrt{\mathpalette\DHLhksqrt}
+\def\DHLhksqrt#1#2{%1
+\setbox0=\hbox{$#1\oldsqrt{#2\,}$}\dimen0=\ht0
+\advance\dimen0-0.2\ht0
+\setbox2=\hbox{\vrule height\ht0 depth -\dimen0}%
+{\box0\lower0.4pt\box2}}
+\usepackage{hyperref}
+\hypersetup{
+menucolor = black,
+colorlinks = true,
+urlcolor = blue,
+pdfborder = 0 0 0, 
+linkcolor = black,
+}
+\hyphenation{gra-fi-ca}
+
+
+\author{E. Pierobon}
+\title{Laboratorio di fisica}
+\begin{document}
+\frontmatter
+\begin{titlepage}
+\centering
+{\large Enrico Pierobon \par}
+\vspace{\stretch{0.5}}
+{\Huge Laboratorio di fisica 1\par}
+\vspace{\stretch{1}}
+\includegraphics[width=\columnwidth]{./UniversitaDiTrento}
+\vspace{24pt}
+\vspace{\stretch{0.5}}
+{\huge Introduzione all'analisi dati per il laboratorio di fisica\par}
+\vspace{\stretch{2}}
+{\small Università degli studi di Trento \par}
+\end{titlepage}
+
+\section*{Premessa}
+\begin{center}
+\texttt{Questa trattazione si propone di essere un supporto allo studente in quanto racchiude le nozioni fondamentali svolte a lezione. La semplicità e la chiarezza vogliono essere al centro di questo documento a scapito della precisione e del formalismo matematico così da permettere al lettore di chiarire eventuali dubbi e di prepararsi al meglio per l'esame senza troppe seghe mentali da matematici esausti. Se questo documento ti piacerà ne sarò felice, se invece ti farà schifo ti auguro di migliorarlo visto che i sorgenti sono liberi, in alternativa ti auguro di cagarti addosso in questo preciso momento oltre che ad una vita piena di sofferenza e pustole incurabili fastidiose sotto le ascelle.}
+\end{center}
+\tableofcontents
+\mainmatter
+\part{Statistica}
+\chapter[Analisi dati laboratorio]{Introduzione all'analisi dati di laboratorio}
+\section{Misura di una grandezza fisica}
+Per misura di una grandezza fisica si intende la procedura operativa per determinare il valore numerico che corrisponde al rapporto fra quantità della grandezza e unità di misura. \`{E} inoltre fondamentale stimare l'incertezza associata alla misura. Esistono due grandi distinzioni delle misure:
+\begin{itemize} \label{1.1_misure dirette o indirette} \index{Misure dirette e indirette}
+\item \textbf{Misure dirette}: misure effettuate confrontando direttamente la grandezza con l'unità di misura
+\item \textbf{Misure indirette}: misure in relazione algebrica con le misure dirette.
+\end{itemize}
+\subsection{Strumenti di misura} \index{Strumenti di misura}
+Per strumento di misura si intende quell'oggetto che permette il confronto della grandezza con l'unità di misura. A questo oggetto si associano delle caratteristiche fondamentali tipiche di ogni strumento:
+\begin{itemize} \index{Strumenti di misura! Caratteristiche}
+\item \textbf{Risoluzione}: è definita come la più piccola variazione  $ \Delta X $ che lo strumento è in grado di rilevare sulla grandezza da misurare.
+\item \textbf{Range}: è definito come l'intervallo massimo sul quale lo strumento è in grado di lavorare.
+\item \textbf{Sensibilità}: è definita come il rapporto tra \[ \frac{\Delta U}{\Delta X} \]
+\item \textbf{Tempo di risposta}: è definito come il tempo per cui lo strumento tende ad allinearsi con la nuova misurazione qualora si presentasse una discontinuità. Generalmente segue un andamento esponenziale del tipo: \[ U(t) = U(0) + \Delta U (1- e^{-\frac{t}{\tau}} ) \]Dopo un tempo $3 \tau$, dove $ \tau $ è definito come il tempo di risposta, generalmente si è attorno al $5 \%$ di differenza con il valore asintotico.
+\end{itemize}
+\section{Incertezza} \index{Incertezza! Cause} 
+Come detto precedentemente una misura deve sempre riportare la propria incertezza\footnote{Per una trattazione più completa si veda capitolo \ref{Capitolo_2_incertezza}}. Le cause che normalmente generano incertezza sono:
+\begin{itemize}
+\item \textbf{Cause intrinseche}:
+\begin{itemize}
+\item Le fluttuazioni casuali sono proprietà del fenomeno che studio
+\item Sto trascurando informazioni importanti sul mio modello
+\end{itemize}
+\item \textbf{Processo di misura}:
+\begin{itemize}
+\item \textit{Incertezza introdotta dallo strumento di misura}: solo il fatto che lo strumento abbia una risoluzione finita comporta incertezza.
+\item \textit{Interazione operatore-strumento}.
+\item \textit{Interazione con l'ambiente dello strumento}: possibili cause ambientali come temperatura, umidità, pressione atmosferica.
+\item \textit{Scelta della metodologia di misura}: a parità di\\ strumento-operatore-ambiente la strategia di misura gioca un ruolo molto importante.
+\end{itemize}
+\end{itemize}
+\subsection{Classificazione incertezza di misura}
+Le cause di incertezza si possono classificare in tre grandi sottogruppi:
+\begin{itemize} \index{Errori! Classificazione}
+\item \textbf{Incertezza dovuta alla risoluzione della misura}: come affermato in precedenza, nessun strumento ha risoluzione infinita il che produce un errore non trascurabile.
+\item \textbf{Errori tipo \textit{A} o errori casuali}: fluttuazioni impredicibili del risultato con ripetizione.
+\item \textbf{Errori tipo \textit{B} o errori sistematici}: è un errore che affligge ogni misurazione in maniera continua e costante, per identificare errori di questo tipo è necessario ripetere l'esperimento in condizioni differenti. \label{1.2.1_Descrizione errore sistematico}
+\end{itemize}
+\subsection{Rappresentazione dell'incertezza} \index{Incertezza! Rappresentazione}
+Riuscire a predirre l'incertezza a cui è affetto l'esperimento è un aspetto fondamentale di ogni relazione scientifica. Esistono vari metodi per considerare il contributo degli errori ai dati tra cui:
+\begin{itemize}
+\item \textbf{Incertezza assoluta}: prevede di fissare un valore centrale o di riferimento $ X_0 $ e assegnare un valore di incertezza in positivo e in negativo rispettivamente $ \delta X_+ $ e $ \delta X_- $ così da ottenere un intervallo di incertezza del tipo:
+\begin{equation}
+X = X_0 +\delta X_+    -\delta X_- 
+\end{equation}
+oppure
+\begin{equation}
+[X_0 - \delta X_- ; X_0 + \delta X_+ ]
+\end{equation}
+\`{E} possibile che gli intervalli  di incertezza coincidano $\delta X :=  \delta X_+ = \delta X_-  $ formando quindi un intervallo simmetrico centrato in $ X_0 $
+\begin{equation}
+X = X_0 \pm \delta X
+\end{equation}
+\item \textbf{Incertezza relativa}: è definita come il rapporto tra l'incertezza $ \delta X  $  e il valore di riferimento $ X_0 $ così da da divenire:
+\begin{equation}
+X = X_0 \left( 1 \pm \frac{\delta X}{X_0} \right) 
+\end{equation}
+\end{itemize}
+\subsection{Tipi di intervallo di incertezza} \index{Incertezza! Tipi di intervallo}
+L'intervallo di incertezza può rappresentare concetti molto diversi:
+\begin{itemize}
+\item \textbf{Intervallo di incertezza massima}: è l'intervallo che include tutti i dati prelevati \label{1.2.2_Intervallo di incertezza massima}
+\begin{equation}
+X \in \left[ X_0 - \delta X; X_0 +\delta X\right] \quad \forall X
+\end{equation}
+\item \textbf{Incertezza tipo o standard}: si propone di misurare la fluttuazione tipica di ogni dato al fine di stimare la fluttuazione totale attorno al valore centrale $ X_0 $.
+\begin{equation}
+\sigma X := \sqrt{<(X_i - X_0)^2>}
+\end{equation}
+La definizione di $\sigma$ misura infatti in media lo scarto quadratico tra ogni valore e il valore centrale.
+\item \textbf{Intervalli di confidenza}: sono intervalli assunti rifacendosi alla probabilità che ha un dato di cadere in un certo intervallo; \label{1.2.2_Intervalli di confidenza}
+\begin{itemize}
+\item scelgo la probabilità $P_o$ che mi interessa 
+\item determino la larghezza dell'intervallo tenendo conto che:
+\begin{equation}
+P(X \in [\quad]) =P_o
+\end{equation}
+\end{itemize}
+\end{itemize}
+\section{Come trattare gli errori}
+\subsection{Errore di risoluzione} \label{1.3.1 definizione di risoluzione di misura} \index{Errori! Risoluzione}
+Definiamo la risoluzione dello strumento di misura come $ \Delta X_s $ e come risoluzione della procedura di misura $ \Delta X_m $. Esistono procedure di misura in grado di ridurre notevolmente $ \Delta X_m $ fino ad arrivare alla condizione $ \Delta X_m \ll \Delta X_s $. Ad esempio se dovessimo misurare lo spessore di un foglio risulterebbe molto più produttivo misurare lo spessore di $ n $ fogli e poi dividere la lunghezza $ l $ per $ n $ ottenendo così una riduzione drastica dell'errore di procedura di misura $ \Delta X_m $. Osserviamo inoltre che se la misura dovesse essere affetta da solo errore di risoluzione allora la ripetizione della misura in condizione identiche restituirà sempre lo stesso valore. Posso quindi escludere errori di tipo \textit{A} ma non errori di tipo \textit{B}. \\
+Si può interpretare l'errore di risoluzione, come visto in precedenza, in molteplici maniere:
+\begin{itemize}
+\item \textbf{Incertezza massima di risoluzione}: ovvero assegno un intervallo massimale che compre la totale distribuzione dei dati\footnote{Come nel caso \ref{1.2.2_Intervallo di incertezza massima} di incertezza massima.}. Otterrei quindi un intervallo di incertezza dove se $ \Delta X_m $ è l'errore di risoluzione, l'intervallo $ X $ è dato da:
+\begin{equation}
+X = X_0 \pm \frac{\Delta X_m}{2}
+\end{equation}
+\item \textbf{Incertezza associata ad una probabilità}: ovvero, ipotizzando che il valore $ X $ si distribuito all'intervallo di incertezza massima\footnote{Come nel caso \ref{1.2.2_Intervalli di confidenza} di intervallo di confidenza} si fissa una probabilità e si risale agli estremi dell'intervallo.
+\item \textbf{Incertezza tipo (standard) di risoluzione}: dobbiamo dare significato a $ \sigma $ definito come:
+\begin{equation}
+\sigma_{ris}:= \sqrt{<(X_i-X_0)^2>}
+\end{equation}
+\begin{enumerate}
+\item $ X_o :=$ \textit{Valore di lettura dello strumento}.
+\item $ X_i :=$ \textit{Possibili valori veri di $ X $ non percepibili a causa della risoluzione dello strumento assumendo equiprobabilità nell'intervallo di incertezza massimo}.
+\item $ < .. > \ := $ \textit{Media integrale dovuta all'assunzione di intervallo equiprobabilistico}.
+\end{enumerate}
+\begin{eqnarray}
+\sigma^2_{ris} & = & \frac{1}{\Delta X_m} \int\limits_{X_0 - \frac{\Delta X_m}{2}}^{X_0 +\frac{\Delta X_m}{2}}(X-X_o)^2 dx \\
+& \stackrel{(\dag)}{=} & \frac{1}{\Delta X_m} \int\limits_{-\frac{\Delta X_m}{2}}^{\frac{\Delta X_m}{2}}t^2 dt \\
+& = & \frac{1}{ 3 \Delta X_m}\left[ \left( \frac{\Delta X_m}{2} \right)^3 - \left( - \frac{\Delta X_m}{2} \right)^3 \right] \\
+& = & \dfrac{\Delta X_m^2}{12}
+\end{eqnarray}
+\textit{Dove su $ (\dag) $ è stata applicata la sostituzione $  t\stackrel{s}{=}X -X_0 $}
+\begin{equation}
+\sigma_{ris} = \dfrac{\Delta X_m}{\sqrt{12}} \simeq 0.3 \Delta X_m \label{eq1.14_Errore di risoluzione}
+\end{equation}
+Da cui si ottiene che l'errore di risoluzione è:
+\begin{equation}
+X \simeq X_0 \pm 0.3 \Delta X_m
+\end{equation} che è anche l'intervallo a cui corrisponde il $ 58 \% $ di confidenza
+\end{itemize}
+\subsection{Errore sistematico o di tipo \textit{B}} \index{Errori! Sistematico o tipo \textit{B}}
+L'errore tipo è un errore che si ripete per ogni misurazione causato generalmente dall'inadeguatezza del modello dell'esperimento o dalle condizioni ambientali trascurate o fuori controllo. Vi sono due principali vie da seguire per porre rimedio ad un errore di tipo \textit{B}: una più teorica che agisce sul modello dell'esperimento l'altra più sperimentale:
+\begin{itemize}
+\item \textbf{Rimedio teorico}: raffino il modello dell'esperimento oppure considero il fattore scatenante calcolandone la perturbazione. Questa procedura va a riscuotersi sul calcolo delle incertezze tramite congetture e ipotetici modelli di distribuzione di probabilità degli errori.
+\item \textbf{Rimedio steprimentale}: ripeto l'esperimento in condizioni differenti ovvero tento di rendere misurabile la fluttuazione. Quest'altra procedura considera l'intervallo di incertezza stimabile alla stessa maniera di errori tipo \textit{A}.
+\end{itemize}
+\subsection{Errore casuale o di tipo \textit{A}} \index{Errori! Casuale o tipo \textit{A}}
+Stimatore per eccellenza e senz'altro più intuitivo è il $ \sigma $ definito come: \index{Scarto tipo}
+\begin{equation}
+\sigma := \sqrt{<(x_i -x_0)^2>}
+\end{equation}
+\begin{enumerate}
+\item $ x_0 :=$ \textit{media aritmetica dei dati o campioni $ x_i $}
+\item $ <..> :=$ \textit{interpretabile anch'essa come media aritmetica}
+\end{enumerate}
+Otteniamo quindi \begin{equation}
+\sigma^* := \sqrt{\frac{1}{N}\sum\limits_{i = 1}^{N} (x_i - m^*)^2 } =: \sqrt{D^*}
+\end{equation}
+dove $ \sigma ^ * $ è detta \textbf{deviazione standard campionaria} e $ D^* $ è detta \textbf{varianza campionaria} \index{Varianza campionaria}
+\subsubsection{Interpretazione della varianza campionaria}. \label{Interpretazione della varianza campionaria}
+\begin{eqnarray}
+D^* & = & \frac{1}{N}\sum\limits_{i = 1}^{N} (x_i - m^*)^2  = m^*[(x_i - m^*[x])^2] \\
+& = & \frac{1}{N}\sum\limits_{i = 1}^{N} (x_i^2 -2x_im^*[x]+m^{*2}) \\
+& = & \frac{1}{N}\sum\limits_{i = 1}^{N} x_i^2 - \frac{2}{N}\left( \sum\limits_{i = 1}^{N} x_i \right) m^*[x]+ \frac{1}{N}\sum\limits_{i = 1}^{N} m^{*2}[x] \\
+& \stackrel{(\dag)}{=} & m^*[x^2]-2m^*[x]m^*[x]+m^{*2}[x] \\
+& = & m^*[x^2] - m^{*2}[x]
+\end{eqnarray}
+\textit{Dove su $ (\dag) $ si è sfruttato il fatto che: \[ \frac{1}{N} \sum\limits_{i = 1}^{N} x_i = m^*[x] \]}
+La varianza campionaria non è altro che la differenza tra la media del quadrato dei campioni e la  media quadrati dei campioni.\\
+Se dovessi considerare esponenti $ k $ di $m^*[(x_i -x_0)^k]$ funzionerebbe comunque con $ k \neq 2 $? 
+\begin{itemize}
+\item $ k = 1 $: si avrebbe il conseguente annullamento dello scarto e quindi non porterebbe alcuna informazione.
+\item $ k = 2n \quad n\in \mathbb{Z}^{++} $: si avrebbe in risalo le fluttuazioni isolate grandi, poiché l'errore tipo \textit{A} presenta fluttuazioni continue ma non improvvise non è un buon stimatore.
+\item $ k = 2n +1 \quad n\in \mathbb{Z}^{++} $: si avrebbero dei membri negativi che andrebbero a compensare le fluttuazioni  positive e quindi a sfalsare la corretta stima della deviazione.
+\item $ |(x_i -x_0)| $: il valore assoluto risolverebbe il problema dei membri negativi ma porterebbe la $ \sigma^* $ a legarsi più di frequente a distribuzioni di probabilità molto comuni come la gaussiana.
+\end{itemize}
+\section{Istogrammi} \index{Istogrammi}
+L'istogramma è un grafico che si propone di misurare la forma della distribuzione, informa sulla frequenza con cui si sono verificati differenti valori della grandezza. Definiamo dei parametri fondamentali per l'istogramma:
+\begin{itemize} 
+\item \textit{il binning}: è la divisione sull'asse delle $ x $ in intervalli di uguale dimensione. Ogni intervallo avrà valore centrale $ X_j $ e una lunghezza $ \Delta X_j $. \index{Istogrammi! Binning}
+\item \textit{$ \mathcal{N} $}: è il numeri di bin.
+\item $ N $: è il numero totale dei dati
+\end{itemize}
+Sull'asse delle $ x $ si pongono i diversi bin, mentre sull'asse delle $ y $ si pone il conteggio dei compresi nel rispettivo bin.\\
+La condizione di normalizzazione è
+\begin{equation}
+N = \sum\limits_{j = 1}^{\mathcal{N}}n_j^*
+\end{equation}
+Gli istogrammi non possono essere confrontati tra di loro a meno che non abbiano lo stesso binning e lo stesso numero di dati, per ovviare a questo problema si introduce la normalizzazione in area e in altezza.
+\subsection{Normalizzazione in altezza} \index{Istogrammi! Normalizzazione in altezza}
+La normalizzazione in altezza comporta la sostituzione dei valori sull'asse delle $ y $ con $ p^*_j $ detta frequenza campionaria definita come:
+\begin{equation}
+p^*_j := \frac{n_j^*}{N}
+\end{equation}
+Con questa normalizzazione è possibile confrontare istogrammi con numero di dati differente ma pur sempre con lo stesso binning. $ p^*_j $ infatti è detta \textbf{frequenza campionaria} perché simile alla probabilità che il valore cada all'interno del bin j-esimo. Anche in questo caso, vale una condizione di normalizzazione ovvero:
+\begin{equation}
+\sum\limits_{j = 1}^{\mathcal{N}}p_j^*  = \frac{\sum n_j^*}{N} = 1
+\label{1.4.1_Condizzione normalizzazione altezza}
+\end{equation}
+\subsection{Normalizzazione in area} \index{Istogrammi! Normalizzazione in area}
+La  normalizzazione in area prende in considerazione anche il valore medio del bin $ \Delta X_j $ e definisce la \textbf{frequenza o densità campionaria} $ f^*_j $
+\begin{equation}
+f^*_j := \frac{p^*_j}{\Delta X_j} = \frac{n^*_j}{N \Delta X_j}
+\end{equation}
+Istogrammi normalizzati in area si possono confrontare liberamente con altri istogrammi a binning e numero di dati differenti a patto che anch'essi siano normalizzati in area.
+La condizione di normalizzazione si rifà alla \eqref{1.4.1_Condizzione normalizzazione altezza} ovvero:
+\begin{equation}
+\sum\limits_{j = 1}^{\mathcal{N}} f_j^* \Delta X_j^* = 1 = \sum\limits_{j = 1}^{\mathcal{N}}p^*_j
+\end{equation}
+\subsection{Scelta del binning} \index{Istogrammi! Scelta del bindaggio} \label{Istogrammi, scelta del binning}
+La scelta del binning è fondamentale per una corretta interpretazione dell'istogramma, un binning troppo stretto non porterebbe informazione sulla distribuzione ma sul singolo dato mentre un binning troppo largo, sarebbe inutile poiché non renderebbe possibile l'analisi delle caratteristiche relative alla distribuzione. Bisogna optare per una scelta di compromesso ovvero scegliere il binning che più esalta la forma della distribuzione; è bene scegliere un binning $ \Delta X_j \sim \sqrt{N} $ vedremo più avanti il motivo 
+\subsection{Parametri statistici}
+Anche qui ci ritroviamo a dare significato ad $ m^* $ e $ D^* $. \index{Istogrammi! Media campionaria} \index{Istogrammi! Varianza campionaria}
+\begin{equation}
+m^*[x] := \frac{1}{N}\sum\limits_{i = 0}^{N}x_i \stackrel{(\dag)}{ \simeq } \frac{1}{N} \sum\limits_{j = 1}^{\mathcal{N}}x_j n^*_j = \sum\limits_{j = 1}^{\mathcal{N}}x_j p^*_j = \sum\limits_{j = 1}^{\mathcal{N}}x_j f^*_j \Delta X_j
+\label{1.4.4_eq_Media campionaria istogrammi}
+\end{equation}
+\textit{Notiamo che in $(\dag)$ ci si è serviti dell'approssimazione: \[ x_i \simeq x_j n^*_j \] 
+\begin{eqnarray}
+D^*[x] & := & \frac{1}{N}\sum\limits_{i = 1}^{N} (x_i - m^*[x])^2  \stackrel{(\ddag)}{ \simeq }  \frac{1}{N}\sum\limits_{j = 1}^{\mathcal{N}} (x_j - m^*[x])^2 n_j^* \label{1.4.4_eq_ varianza campionaria istogrammi} \\
+& = & \sum\limits_{j = 1}^{\mathcal{N}} (x_j - m^*[x])^2 p_j^* = \sum\limits_{j = 1}^{\mathcal{N}} (x_j - m^*[x])^2 f_j^* \Delta X_j
+\end{eqnarray}
+in $ (\ddag) $ ci si è serviti invece di: \[ (x_i - m^*[x])^2 \simeq (x_j - m^*[x])^2 n_j^* \]}
+\subsection{Istogrammi cumulativi} \index{Istogrammi! Cumulativi}
+Gli istogrammi cumulativi sono categorie di istogrammi che riportano sull'asse $ y $ il conteggio cumulativo ovvero il conteggio come gli istogrammi normali a cui va sommato il conteggio di tutti i bin precedenti. Piuttosto utilizzati tra gli istogrammi cumulativi sono gli istogrammi cumulativi in frequenza campionaria che riportano sull'asse delle $ y $ la frequenza cumulativa di ogni bin. Sono particolarmente indicati per l'utilizzo di quantili ovvero rette tracciate da una percentuale di $ p^*_{j\; cumulativo} $ che vanno ad intercettare il rispettivo bin j-esimo così da identificare ad occhio che probabilità c'è di trovarsi al di sopra o sotto di un certo valore di probabilità. Il percentile o il quantile rispettivamente al $ 50 \% $ o $ 0.5 $ merita il nome particolare di \textit{mediana}.
+\subsection{Proprietà asintotiche degli istogrammi} \label{Proprità asintotiche degl istogrammi} \index{Istogrammi! Proprietà asintotiche}
+Per limite asintotico degli istogrammi si intende $ N \to \infty $ ovvero un numero di campioni infinito ottenendo così l'\textbf{istogramma limite}. L'istogramma limite ha la proprietà di assumere la forma corretta della distribuzione perciò, trattandosi di una condizione irrealizzabile in laboratorio, si utilizzano gli \textit{stimatori} per avvicinarsi il più possibile alle proprietà dell'istogramma limite. Per esempio, stimatore di $ f_j $ ovvero la densità limite riferita al bin j-esimo è $ f^*_j $. La relazione è la seguente:
+\begin{equation}
+f^*_j \stackrel{N \to \infty}{ \longrightarrow } f_j
+\end{equation}
+Quindi $ f^*_j $ è uno stimatore di $ f_j $.
+Il concetto di istogramma limite non è altro che un'astrazione più grande essendo legata al binnig; si dice \textbf{distribuzione limite} se soddisfa: \index{Istogrammi! Istogramma limite}
+\begin{eqnarray}
+N \to \infty \\
+\Delta X_j \to 0
+\end{eqnarray}
+Ovvero oltre alla proprietà precedente per l'istogramma limite, si richiede un binning infinitesimo. In questo caso, la densità campionaria diventa: \index{Istogrammi! Densità campionaria}
+\begin{equation}
+f^*_j  \xrightarrow{N \to \infty ;\; \Delta X_j \to 0} f_j(x)
+\end{equation}
+dove $ f_j(x) $ è detta distribuzione limite di $ x  $ o densità di probabilità di $ x $ con unità di misura $ \frac{1}{[x]} $. La condizione di normalizzazione passando al limite della distribuzione diventa:
+\begin{equation}
+\sum\limits_{j = 1}^{\mathcal{N}} f_j^* \Delta X_j^* = 1 \xrightarrow{N \to \infty ;\; \Delta X_j \to 0} \int\limits_{\mathit{dominio\ di\ }x}f(x)dx = 1
+\end{equation}
+\section{Stima dei parametri della distribuzione limite} \index{Istogrammi! Stimatori}
+Come accennato il precedenza, il raggiungimento sperimentale della distribuzione limite è fuori discussione, per tanto si utilizzano gli \textbf{stimatori}, ovvero particolari funzioni che tendono ad assomigliare ai parametri veri della distribuzione. Tra gli stimatori introdotti prima, abbiamo:
+\begin{itemize}
+\item media campionaria \footnote{Si veda l'equazione \eqref{1.4.4_eq_Media campionaria istogrammi} per la dimostrazione.} \index{Istogrammi! Media campionaria}
+\begin{equation}
+m^*[x]\simeq\sum\limits_{j = 1}^{\mathcal{N}}x_j f^*_j \Delta X_j \xrightarrow{N \to \infty ;\; \Delta X_j \to 0} m[x]:=\int\limits_{dom. \ di \ x}xf(x)dx
+\end{equation}
+\item varianza campionaria \footnote{Si veda l'equazione \eqref{1.4.4_eq_ varianza campionaria istogrammi} per la dimostrazione.} \index{Istogrammi! Varianza campionaria}
+\begin{align}
+D^*[x]\simeq\sum\limits_{j = 1}^{\mathcal{N}} (x_j - m^*[x])^2 f_j^* \Delta X_j \xrightarrow{N \to \infty ;\; \Delta X_j \to 0} D[x]:= \\:= \int\limits_{d. \,di \, x}f(x) (x-m)^2dx
+\end{align}
+\end{itemize}
+Fino ad adesso abbiamo utilizzato $ D^* $ come stimatore di varianza campionaria; esiste però uno stimatore migliore ovvero $ \tilde{D} $ definito come: \index{Scarto tipo stimato}
+\begin{equation}
+\tilde{D}:= \frac{N}{N-1}D^* = \frac{1}{N-1}\sum\limits_{i =1}^{N}(x_i-m^*)^2
+\end{equation}
+Risulta uno stimatore migliore per vari motivi:
+\begin{itemize}
+\item Con un solo dato $ \tilde{D} $ non è definito ed impedisce la misura.
+\item $ \tilde{D}  > D^*$ dato che $ \dfrac{N}{N-1}<1 $ e poiché $ (x_i-m^*)^2 $ \textit{in media}\footnote{Questo fatto è dovuto ad $ m^* $ poiché è più centrato sui i campioni rispetto $ m $.} è minore di $  (x_i-m)^2 $. 
+\item $ D^* \xrightarrow{N \to \infty } \tilde{D} $ quindi le proprietà asintotiche sono conservate.
+\end{itemize}
+Come nel caso di $ \tilde{D} $ lo stimatore $ \sigma $ diventerà
+\begin{equation}
+\tilde{\sigma} :  =  \sqrt{\tilde{D}} =
+\end{equation}
+\begin{equation}
+=\sqrt{\frac{1}{N-1}\sum\limits_{i =1}^{N}(x_i - m^*)^2} \simeq \sqrt{\frac{1}{\mathcal{N} - 1}\sum\limits_{j = 1}^{\mathcal{N}} (x_j - m^*[x])^2 f_j^* \Delta X_j}
+\end{equation}
+\subsection{Esempio: distribuzione uniforme}
+Nel caso di equiprobabilità delle fluttuazioni:
+\begin{equation}
+f(x) = \begin{cases}
+\frac{1}{\Delta X} \qquad \textit{per } x \in [x_{min}, x_{max}] \\
+0  \qquad \; \; \; \textit{altrove}
+\end{cases}
+\end{equation}
+Dove $ \Delta X := x_{max}- x_{min} $ e quindi per soddisfare la condizione di normalizzazione:
+\begin{equation}
+1 = \int\limits_{x_{min}}^{x_{max}} \frac{1}{\Delta X}dx \Leftrightarrow \Delta X = x_{max}- x_{min} 
+\end{equation}
+Nel caso in cui la distribuzione si uniforme $ m[x] $ diventa semplicemente:
+\begin{eqnarray}
+m[x] & = & \int\limits_{x_{min}}^{x_{max}} x \frac{1}{\Delta x}dx = \frac{1}{2 \Delta x} \left[ x_{max}^2 - x_{min}^2 \right] \\ & = & \frac{1}{2 \Delta x} \left[ x_{max}-x_{min} \right] \Delta x \\ &=& \frac{1}{2} (x_{max}-x_{min})
+\end{eqnarray}
+Mentre la varianza campionaria$ D[x] $:
+\begin{equation}
+D[x] = \int\limits_{x_{min}}^{x_{max}} (x-m)^2 \frac{1}{\Delta x}dx \stackrel{(\dag)}{=} \frac{\Delta x ^2}{12}
+\end{equation}
+\textit{Dove su $ (\dag) $ è stato utilizzato il risultato della \eqref{eq1.14_Errore di risoluzione}} \\
+Di conseguenza per $ \sigma[x] $ si ottiene:
+\begin{equation}
+\sigma[x] = \frac{\Delta x}{\sqrt{12}}
+\end{equation}
+Osservazioni:
+\begin{itemize}
+\item La massima fluttuazione possibile di $ x $ rispetto a $ m[x] $ è $ \simeq1.73\, \sigma[x] $ infatti
+\begin{equation}
+\sigma[x] = \frac{\Delta x}{\sqrt{12}} = \frac{2}{\sqrt{12}} \frac{\Delta x}{2} \Rightarrow \frac{\Delta x}{2} = \frac{\sqrt{12}}{2} \sigma = \sqrt{3}\sigma
+\end{equation}
+\item La probabilità di ottenere un valore di $ x \in [m-\sigma, m +\sigma]$ è $ \simeq 58\% $ poiché
+\begin{equation}
+p(x \in [m-\sigma, m +\sigma]) = \int\limits_{m-\sigma}^{m+\sigma} \frac{1}{\Delta x}dx = \frac{1}{2\Delta x}2\sigma = \frac{2}{\Delta x}\frac{\Delta x}{\sqrt{12}}= \frac{1}{\sqrt{3}}
+\end{equation}
+\end{itemize}
+\subsection{Esempio: distribuzione di Gauss o normale}
+La distribuzione di \textbf{Gauss} è la distribuzione più comune in natura, moltissimi fenomeni di origine aleatoria si possono ricondurre a questa distribuzione definita come:
+\begin{equation}
+f\colon\mathbb{R}\to \mathbb{R} \qquad \qquad  f(x):=\frac{1}{\sigma \sqrt{2 \pi}} \exp \left[ - \frac{(x-m)^2}{2\sigma^2}\right] 
+\end{equation}
+Dipende da $ 2 $ parametri ovvero:
+\begin{itemize}
+\item $ m $ detto valore medio o speranza matematica
+\item $ \sigma $ detta deviazione standard
+\end{itemize}
+e anche per la gaussiana vale la condizione di normalizzazione:
+\begin{equation}
+\int\limits_{-\infty}^{+\infty}f(x)dx = 1
+\end{equation}
+Analizziamo ora alcune probabilità specifiche:
+\begin{itemize}
+\item $ prob\;  \{x \in [x_\alpha, x_\beta]\} = $ \textit{area sottesa da $ x_\alpha $ ad $ x_\beta  $}
+\item $ prob\;  \{x \in [x-\sigma, x+\sigma]\} = \int\limits_{m-\sigma}^{m+\sigma} f(x)dx \simeq 1 - \frac{1}{3} \simeq 68 \% $
+\item $ prob\;  \{x \in [x-2\sigma, x+2\sigma]\} = \int\limits_{m-2\sigma}^{m+2\sigma} f(x)dx \simeq 1 - \frac{1}{20} \simeq 95 \% $
+\item $ prob\;  \{x \in [x-3\sigma, x+3\sigma]\} = \int\limits_{m-3\sigma}^{m+3\sigma} f(x)dx \simeq 1 - \frac{1}{400} \simeq 99.74 \% $
+\end{itemize}
+Quindi, con pochi dati posso misurare solo la campana della distribuzione mentre per misurare le code necessito di moltissimi dati.
+\chapter{Incertezza} \label{Capitolo_2_incertezza}
+In questo capitolo analizzeremo come propagare l'incertezza in misure dirette e indirette \footnote{Per definizione di misure dirette-indirette si veda \ref{1.1_misure dirette o indirette}} e come discutere la compatibilità tra misure e predizione teoriche.
+\section{Propagazione incertezza} \index{Incertezza! Propagazione}
+Supponendo che $ x, \ y, \ z $ siano misure dirette e che l'applicazione $ Q $ sia in relazione con le misure $ Q=Q(x,y,z) $ spiegheremo come calcolare l'incertezza su $ Q $ a seconda del tipo di legge.
+\subsection{Relazione lineare} \label{2.1_Propazagione incertezza in relaz lineare} \index{Incertezza! Propagazione in relazione lineare}
+Supponiamo il caso più semplice ovvero una relazione lineare:
+\begin{equation}
+Q = a +bx+cy+dz \dots
+\end{equation}
+con $ a, b, c, d.. $ coefficienti costanti. Prima di stimare l'incertezza su $ Q $ necessito della stima valore medio o $ m[x] $.
+\begin{itemize}
+\item Stima del valore medio di $ Q $ tramite:
+\begin{itemize}
+\item Media campionaria:
+\begin{align}
+m^*[Q] : &= \frac{1}{N}\sum\limits_{i = 1}^{N} (a +bx_i+cy_i+dz_i \dots) \\ & = \frac{1}{N}\sum\limits_{i = 1}^{N} a + \frac{1}{N}\sum\limits_{i = 1}^{N} bx_i  + \frac{1}{N}\sum\limits_{i = 1}^{N} cy_i  + \frac{1}{N}\sum\limits_{i = 1}^{N} d z_i \dots \\
+&= a + b\left( \frac{1}{N}\sum\limits_{i = 1}^{N} x_i \right) + c\left( \frac{1}{N}\sum\limits_{i = 1}^{N} y_i \right) + d\left( \frac{1}{N}\sum\limits_{i = 1}^{N} z_i \right)\dots \\
+m^*[Q] &= a + b \, m^*[x] +c \, m^*[y] +d \, m^*[z]\dots \\
+	&= a + bx_0 +cy_0+dz_0 \dots\label{eq_2.5}
+\end{align}
+\item Speranza matematica: \index{Speranza matematica} \label{Def: speranza matematica}
+\begin{align}
+m[Q] &= \int\limits_{\textit{dom di Q}} Q f(Q)\,dQ \\ 
+& = \int\limits_{\textit{dom di Q}} (a +bx + cy + dz \dots ) f(Q)\,dQ \\
+& \stackrel{(\dag)}{=}  a + bm[x]+cm[y]+dm[z]\dots
+\end{align}
+\textit{Dove su $ (\dag) $ si utilizza il passaggio al limite asintotico di $ N \to \infty $ di \eqref{eq_2.5}. Il risultato è complicato da dimostrare ma molto intuitivo.}
+\end{itemize}
+\item Stima dell'incertezza di $ Q $ tramite:
+\begin{itemize}
+\item Deviazione standard campionaria $ \tilde{\sigma} $:
+\begin{equation}
+\tilde{\sigma} := \sqrt{\tilde{D}[Q]} = \sqrt{\frac{1}{N-1}\sum\limits_{i = 1}^{N}(Q_i - Q_0)^2} \qquad Q_0  := m^*[Q]
+\end{equation}
+\item Deviazione standard della popolazione $ \sigma [Q] $:
+\begin{equation}
+\sigma [Q] := \sqrt{D[Q]} = \sqrt{\int\limits_{\textit{dominio}}(Q- m[Q])^2 f(Q) \; dQ}
+\end{equation}
+Nota: per semplicità ora consideriamo il caso di $ \tilde{\sigma } $ in presenza di errori casuali per poi passare al limite asintotico $N \to \infty $. Definiamo anche la \textit{covarianza campionaria} $ \tilde{\sigma}_{xy} $ che ci sarà utile in seguito. Introduciamo anche il concetto di grandezze \textit{statisticamente indipendenti}.
+\end{itemize}
+\subsubsection{Grandezze statisticamente dipendenti} \index{Grandezze statisticamente indipendenti}
+Per meglio comprendere la covarianza è necessario introdurre il concetto di \textbf{grandezze statisticamente indipendenti} ovvero: $ x $ e $ y $ si dicono statisticamente indipendenti se non sussiste alcuna relazioni fra le fluttuazioni di \eqref{eq_2.18} e \eqref{eq_2.19}
+\begin{eqnarray}
+(x_i -m[x]) \label{eq_2.18} \\ 
+(y_i - m[y]) \label{eq_2.19}
+\end{eqnarray}
+In altre parole se il valore di una fluttuazione non mi da alcuna informazione sul valore dell'altra fluttuazione. Attenzione che $ m[x] $ e $ m[y] $ possono essere in relazione, l'importante è che non ci sia legame tra le due \textbf{fluttuazioni}. 
+
+Definiamo la \textbf{covarianza campionaria} $ \tilde{\sigma}_{xy} $: \index{Covarianza campionaria}
+\begin{eqnarray}
+\tilde{\sigma}_{xy} & : = & \frac{1}{N-1} \sum\limits_{i = 1}^{N} (x_i-x_0)(y_i-y_0) \\
+\sigma^*_{xy} & := & \frac{1}{N}\sum\limits_{i = 1}^{N} (x_i-x_0)(y_i-y_0) \label{eq_2.14 definizione di covarianza}
+\end{eqnarray}
+da cui
+\begin{align}
+\tilde{D}[Q] =& \frac{1}{N-1} \sum\limits_{i = 1}^{N} (a+bx_i+cy_i+\dots-a-bx_0-cx_0-\dots)^2 \\
+= & \frac{1}{N-1} \sum\limits_{i = 1}^{N} (bx_i-bx_o)^2 + \frac{1}{N-1} \sum\limits_{i = 1}^{N} (cy_i-cy_o)^2+ \dots \\ 
+ &+ \textit{ altri termini quadratici}\dots \notag \\
+ &+ \frac{2}{N-1} \sum\limits_{i = 1}^{N}(bx_i - bx_0)(cy_i-cy_0) + \dots\\
+ &+ \textit{ altri termini doppi prodotti}\dots \notag \\
+= & b^2 \tilde{D}[x] +c^2 \tilde{D}[x]+\dots \textit{ altri termini di varianza}\\
++ & 2bc\,\tilde{\sigma}_{xy} + 2bd \, \tilde{\sigma}_{xz} + \dots \textit{ altri termini di covarianza}\\
+\tilde{D}[Q] \xrightarrow{N \to \infty} & D[Q] = b^2D[x]+c^2D[y]+\dots +2bc \, \sigma_{xy} + 2bd \, \sigma_{xz} +\dots
+\end{align}
+Analizzando la definizione di covarianza abbinata alla definizione di statisticamente indipendenti otteniamo che:
+\begin{equation}
+(N-1)\tilde{\sigma}_{xy} = \sum\limits_{i = 1}^{N} (x_i-x_0)(y_i-y_0) \stackrel{(\dag)}{\simeq} 0
+\end{equation}
+\textit{Una diretta conseguenza della indipendenza statistica è che la sommatoria avrà in media termini negativi e positivi che si bilanceranno a vicenda da cui segue $ (\dag) $}. Questa compensazione farà crescere il valore della sommatoria meno rapidamente che $ \propto N $ dimostreremo infatti che è $ \propto \sqrt{N} $ cioè:
+\begin{eqnarray}
+\tilde{\sigma}_{xy}  \xrightarrow{N \to \infty} 0 = \sigma_{xy} \\
+\forall N \quad \mid \tilde{\sigma}_{xy}  \mid \ll \tilde{D}[x] +\tilde{D}[y]
+\end{eqnarray}
+Quindi $ \tilde{\sigma}_{xy}  $ è trascurabile rispetto alle varianze.
+Per concludere, \textbf{nel caso di grandezze statisticamente indipendenti vale}:
+\begin{eqnarray}
+D[Q] &=& b^2D[x]+c^2D[y]+ \dots \label{eq_2.23}\\ 
+\tilde{D}[Q] &=& b^2 \tilde{D}[x]+c^2 \tilde{D}[y]+ \dots \label{eq_2.24}
+\end{eqnarray}
+Osservazioni:
+\begin{itemize}
+\item Dimostreremo che per grandezze statisticamente vale la seguente uguaglianza:
+\begin{align}
+\left\langle \sum(x_i-x_0)(y_i-y_0)\right\rangle  =&  \sum<(x_i-x_0)(y_i-y_0)>\\ =& \sum <x_i-x_0><y_i-y_0> \notag
+\end{align}
+\item La stima della propagazione dell'incertezza è valida solo per le incertezze tipo \textit{A} mentre è errata per le incertezze che mostrano regolarità (come errori tipo \textit{B}).
+\item L'espressione $ D[Q] $ è più generale e può essere applicata a qualunque modello teorico di incertezza.
+\item Ricordarsi che per le grandezze non statisticamente indipendenti va presa in considerazione l'effetto della covarianza.
+\end{itemize}
+\end{itemize}
+\section{Applicazioni della propagazione dell'incertezza}
+\subsection{Media campionaria} \index{Incertezza! Propagazione alla media campionaria}
+Nel caso di misure ripetute in condizioni identiche e indipendenti
+calcolo lo scarto tipo di $ m^*[x] $ osservando che 
+\begin{equation}
+m^* = \frac{1}{N}\sum\limits_{i = 1}^{N}x_i
+\end{equation}
+combinazione lineare di 
+\begin{equation}
+\frac{1}{N}
+\end{equation}
+e 
+\begin{equation}
+\sum\limits_{i = 1}^{N}x_i
+\end{equation}
+diventa da \eqref{eq_2.23} quindi:
+\begin{eqnarray}
+\sigma[m^*] &=& \sqrt{\frac{1}{N^2}D[x_1]+\frac{1}{N^2}D[x_2]+\dots +\frac{1}{N^2}D[x_n]}\\
+&\stackrel{(\dag)}{=}&\sqrt{\frac{N \, D[x]}{N^2}}=\frac{1}{\sqrt{N}}\sqrt{D[x]}=\frac{1}{\sqrt{N}}\sigma[x] \label{eq_2.29 varianza media campionaria}
+\end{eqnarray}
+\textit{Dove su $ (\dag) $ si è sfruttato il fatto che gli $ x_i $ sono misure ripetute nelle stesse condizioni $ \Rightarrow D[x_i]=D[x] $.}\\
+Il fattore $ \dfrac{1}{\sqrt{N}} $ è detto \textbf{fattore di riduzione} dell'incertezza di $ m^* $ rispetto all'incertezza tipo del singolo campione. Si ricava quindi che
+\begin{equation}
+m^*[x]\pm\sqrt{\frac{1}{N}\frac{1}{N-1}\sum\limits_{i =1}^{N}(x_i -m^*[x])^2} = m^*[x]\pm \frac{\tilde{\sigma}[x]}{\sqrt{N}}
+\end{equation}
+che è l'intervallo d'incertezza tipo nel caso di errori tipo \textit{A}.\\
+Osserviamo inoltre che:
+\begin{itemize}
+\item Il contributo dell'incertezza casuale $ \propto \dfrac{1}{\sqrt{N}} $
+\item La riduzione di $ \sigma [m^*]\propto \dfrac{1}{\sqrt{N}} $ si applica solo agli errori di tipo \textit{A} infatti per tutti gli errori che si verificano con regolarità
+\begin{equation}
+x_i = \delta x_i + \delta x+ x_0
+\end{equation}
+dove:
+\begin{itemize}
+\item $ \delta x_i :=$\textit{ fluttuazione tipo A}
+\item $ \delta x := $\textit{ fluttuazione uguale per tutti i valori}
+\item $ \delta x_0 :=$\textit{ valore vero}
+\end{itemize}
+otteniamo che 
+\begin{equation}
+m^*[x] = \delta x + x_0
+\end{equation}
+per cui da
+\begin{equation}
+\delta x \gg \sigma_{casuali}[x]
+\end{equation}
+e quindi si conclude con
+\begin{equation}
+\sigma [m^*] = \sigma[x]
+\end{equation}
+cioè ho la stessa deviazione standard del singolo dato.
+\end{itemize}
+\subsection{Misura di un multiplo di una grandezza \textit{x}}
+Partiamo dalla relazione \footnote{Ad esempio la durata di $ M $ periodi di pendolo consecutivi} $ Q = Mx $ dove 
+\begin{itemize}
+\item $M \in \mathbb{Z} $
+\item $Q :=$ \textit{valore misurato}
+\item $x \; :=$ \textit{valore calcolato}
+\item $ x_0 :=  \dfrac{Q_0}{M}$ 
+\end{itemize}
+Abbiamo dai risultati precedenti \eqref{eq_2.23} e \eqref{eq_2.24} che:
+\begin{eqnarray}
+D[Q] = M^2D[x] \\
+\tilde{D}[Q] = M^2\tilde{D}[x]
+\end{eqnarray}
+rispettivamente per un intervallo di incertezza tipo su $ x $
+\begin{equation}
+x_0 \pm \frac{\sigma[Q]}{M}
+\end{equation}
+e per intervallo di incertezza casuale
+\begin{equation}
+x_0 \pm \frac{\tilde{\sigma}[Q]}{M}
+\end{equation}
+Notare che in questo caso la riduzione di incertezza va come  $ \propto \dfrac{1}{M} $ e quindi conviene misurare $ Q = Mx $ piuttosto che fare $ M $ misure separate di $ x $ per poi calcolarne la media.
+\subsection{Composizione di contributi di incertezza di varia natura} \index{Incertezza! Propagazione di contributi differenti}
+\`{E} molto probabile trovarsi nelle condizioni di dover considerare incertezza generata da diversi fattori; è quindi probabile che si tratti di eventi statisticamente indipendenti. Per calcolare la fluttuazione totale $ \delta x $ è sufficiente sommare i contributi di incertezza come della funzione totale $ \delta x $
+\begin{equation}
+\delta x = \delta x_A + \delta x_B + \delta x_{ris}
+\end{equation}
+dove 
+\begin{itemize}
+\item $ \delta x_A :=$\textit{ errore casuale che dipende dal campione}
+\item $ \delta x_B :=$\textit{ errore sistematico}
+\item $ \delta x_{ris} :=$\textit{ errore di risoluzione}
+\end{itemize}
+Grazie alle \eqref{eq_2.23} ed \eqref{eq_2.24} otteniamo che:
+\begin{equation}
+D_{totale}[x]=D_A[x]+D_B[x]+D_{ris}[x] \Rightarrow \sigma_{tot}[x]=\sqrt{\sigma_A^2[x]+\sigma_B^2[x]+\sigma_{ris}^2[x]}
+\end{equation}
+Ora sappiamo che: \textbf{le incertezze dovute ad effetti indipendenti tra loro si compongono quadraticamente}. \label{2.2.3_composizione incertezze di eventi indipendenti} \\
+Osserviamo che:
+\begin{itemize}
+\item $ \sigma_{tot} \geq \sigma_{ris} $ la deviazione standard totale non può scendere sotto la deviazione standard di risoluzione
+\item se $ \sigma_{a}[m^*] \simeq \sigma_{ris}[x]  \Rightarrow \sigma_{tot}\simeq \sqrt{2 \sigma^2_{ris}[x] } \simeq \sqrt{2}\sigma_{ris}[x] $ aumentando il numero di misure per esempio di $ 4 $ ottengo:
+\begin{equation}
+\sigma_A[m^*] \to \frac{1}{2}\sigma_{ris}[x] \Rightarrow \sigma_{tot} = \sqrt{\frac{1}{4}\sigma^2_{ris}+\sigma^2_{ris}}\simeq 1.1\sigma_{ris}
+\end{equation}
+Il vantaggio nel ripetere le misure è molto piccolo rispetto al costo. Conviene quindi progettare l'esperimento in maniera tale da 
+\begin{equation}
+\sigma_A[m^*] \gtrsim \sigma_{ris} \Rightarrow \frac{\sigma_A[x]}{\sqrt{N}} \gtrsim \frac{\Delta X_m}{\sqrt{12}} \Rightarrow N \lesssim \frac{\sigma^2[x]}{\Delta X^2_m}12 
+\end{equation}
+Così ottengo ottengo più incertezza di tipo \textit{A} con costi accettabili. \\
+Se lo scopo dell'esperimento è analizzare la forma della distribuzione nelle sue caratteristiche rare più misure indipendenti prendo meglio è.
+\end{itemize}
+\section{Compatibilità tra misure} \index{Compatibilità tra misure}
+Per decidere se misure o predizioni teoriche sono compatibili tra di loro supponendole: $ x_a $ e relativa incertezza $ \delta x_a $, $ x_b $ relativa incertezza $ \delta x_b $  prima di tutto devono verificare
+\begin{equation}
+m[x_a] = m[x_b]
+\end{equation}
+Se le speranze matematiche sono compatibili allora si può considerare la differenza $ R:= x_a - x_b $ che deve essere:
+\begin{equation}
+R \simeq 0
+\end{equation}
+\subsection{Intervallo d'incertezza massima} \label{subsec_2.3.1}
+Se gli intervalli d'incertezza massima sono sovrapposti allora non posso escludere che le misure siano compatibili tra di loro quindi l'ipotesi del sono compatibili vince. Considero inoltre
+\begin{equation}
+\lvert R \rvert \leq \delta x_a + \delta x_b
+\end{equation}
+se è verificata allora tengo buona l'ipotesi di compatibilità.
+\subsection{Intervallo d'incertezza tipo}
+Considero $ x_a \pm \sigma_a $ e $ x_b \pm \sigma_b $ indipendenti. Se utilizzo il sistema utilizzato \ref{subsec_2.3.1} mi imbattere in falsi allarmi:
+\subsection{Problema dei falsi allarmi} \index{Falsi allarmi} \index{Fattore di compertura}
+Il problema di falso allarme si verifica perché la probabilità che  
+\begin{equation}
+m[R]\simeq 0
+\end{equation}  e nonostante ciò 
+\begin{equation}
+R\notin [-\sigma_R, +\sigma_R]
+\end{equation} 
+è troppo alta. Con questo criterio chiamo troppo frequentemente un falso allarme di incompatibilità\footnote{Se seguissi una distribuzione gaussiana avrei il $ 32 \%$ di falso allarme} anche se in realtà $ x_a $ è compatibile con $ x_b $. La soluzione per i falsi allarmi è quella di allargare l'intervallo tramite un fattore di copertura $ k $ in maniera tale da:
+\begin{equation}
+R \leq k \sigma_R = k \sqrt{\sigma_A^2+\sigma_B^2}
+\end{equation}
+\begin{itemize}
+\item $ k $ altro è una condizione prudente perché abbassa la probabilità di falso allarme.
+\item $ k $ basso è più potente perché  permette di riconoscere incompatibilità più piccole.
+\end{itemize}
+In ogni caso si raccomanda $ k \gtrsim 2$. La scelta comunque è responsabilità dello scienziato, è soggettiva e dipende da una valutazione costi/benefici. Per non inquinare la probabilità di falso allarme \textbf{bisogna decidere a priori il fattore di copertura} $ k $, se si dovesse sbirciare, la decisione della soglia potrebbe essere influenzata dalla tentazione di accondiscendere a qualche aspettativa.
+\begin{itemize}
+\item Nella comunicazione scientifica bisogna:
+\begin{itemize}
+\item dare la conclusione su incompatibilità e relativo falso allarme del fattore di copertura scelto a priori
+\item scrivere a che fattore di copertura corrisponde il valore trovato per $ r $.
+\end{itemize}
+\item Prestare attenzione che la relazione fra probabilità di falso allarme e $ k $ è conosciuta solo fino ad un certo valore di $ k $, per valori superiori bisogna affidarsi ad estrapolazioni. Per esempio nel caso della distribuzione normale:
+\begin{itemize} \index{Falsi allarmi! Distribuzione normale}
+\item $ k \simeq 3 $ probabilità di falso allarme $ \simeq \frac{1}{370} $
+\item $ k \simeq 4 $ probabilità di falso allarme $ \simeq \frac{1}{1.6\times 10^4} $
+\item $ k \simeq 5 $ probabilità di falso allarme $ \simeq \frac{1}{1.7 \times 10^6} $
+\item $ k \simeq 6 $ probabilità di falso allarme $ \simeq \frac{1}{5 \times 10^8} $
+\end{itemize}
+\end{itemize}
+\section[Informazione da incertezze differenti]{Comporre l'informazione di risultati con incertezze differenti}
+Qualora ci si trovasse nel misurare la stessa grandezza in condizioni differenti per stabilire o meno la dipendenza dalle nuove condizioni. 
+\subsection{Media pesata} \index{Media pesata}
+Assumiamo:
+\begin{itemize}
+\item $ N :=$ \textit{misure indipendenti di }$ x_i $.
+\item $ m[x_i] = m $: stessa speranza matematica.
+\item $ \sigma [x_i]= \sigma_i $: le deviazioni standard tra loro diverse.
+\end{itemize}
+La media campionaria è inservibile nel caso di $ \sigma $ diversi tra loro si introduce quindi la \textbf{media pesata} definita come:
+\begin{equation}
+ m_w := \dfrac{\sum\limits_{i = 1}^{N}w_i x_i}{\sum\limits_{i = 1}^{N}w_i}
+\end{equation}
+dove $ w_i $ sono i pesi\footnote{La media campionaria è interpretabile come una media pesata di peso unitario}. Al denominatore vale la condizione di normalizzazione affinché:
+\begin{equation}
+m[m_w] = \frac{1}{\sum w_i} \sum w_i m[x_i] = m
+\end{equation}
+Propagando l'incertezza come da \eqref{eq_2.23} di $ m_w $ di $ \sigma_i $ si ottiene la sia varianza:
+\begin{equation}
+\sigma^2[m_w] = \frac{1}{\left( \sum w_i \right)^2 }\sum\limits_{i = 1}^{N} w_i^2 \sigma^2[x_i]
+\end{equation}
+Riepilogando le condizioni necessarie all'utilizzo della media pesata:
+\begin{itemize}
+\item $ \sigma[w_m] $ è corretto se le $ \sigma_i $ sono corrette.
+\item La media pesata ha senso solo se le $ x_i $ sono compatibili tra loro ovvero hanno tutte la stessa speranza matematica.
+\item $ x_i $ devono essere indipendenti.
+\end{itemize}
+La media pesata da liberà nella scelta dei pesi, posso usare criteri soggettivi\footnote{Credo più ad una misura piuttosto che ad un'altra.}. La scelta corretta dei pesi determina la bontà del risultato in particolare se la distribuzione è di gauss la scelta ottimale è:
+\begin{equation}
+w_i = \frac{1}{\sigma_i^2}
+\end{equation}
+Infatti minimizza l'incertezza statistica su $ m_w $ facendo diventare:
+\begin{eqnarray}
+m_w = \dfrac{\sum\limits_{i = 0}^{N}\frac{x_i}{\sigma_i^2}}{\sum\limits_{i = 0}^{N}\frac{1}{\sigma_i}} \\
+\sigma[m_w] = \frac{1}{\sqrt{\sum\limits_{i = 0}^{N}\frac{1}{\sigma_i^2}}}
+\end{eqnarray}
+Otteniamo quindi:
+\begin{equation}
+\sigma[m_w] = \frac{1}{\sum\limits_{i = 0}^{N}\frac{1}{\sigma_i^2}} \left( \sum\limits_{i = 0}^{N} \frac{\sigma_i^2}{\sigma_i^4} \right)^\frac{1}{2} =  \frac{1}{\sum\limits_{i = 0}^{N}\frac{1}{\sigma_i^2}} \left( \sum\limits_{ i = 0}^{N}  \frac{1}{\sigma_i^2}\right)^\frac{1}{2} 
+\end{equation}
+\subsubsection{Confronto tra media campionaria e media pesata} \index{Confronto tra media pesata e campionaria}
+La differenza fondamentale è nella stima di $ \sigma $.
+Nella media campionaria $ \sigma[m^*] $ è calcolato dalle fluttuazioni\footnote{Si veda l'equazione \eqref{1.4.4_eq_ varianza campionaria istogrammi}.} degli $ x_i $. Nella media pesata invece è calcolato dalle stime di $ \sigma_A $ dei dati e dagli $ w_i $ inoltre non considera le fluttuazioni fra i dati e richiede più informazioni; è quindi più potente ma meno robusta\footnote{Risente la dipendenza dalla veridicità delle informazioni.}. Se le stime degli $ \sigma[x_i] $ non sono molto diverse fra loro le loro differenze potrebbero essere dovute soltanto a incertezze casuali degli stimatori, conviene quindi considerarle uguali fra loro ed utilizzare la media campionaria perché più robusta.
+\section[Propagazione via metodo grafico]{Propagazione dell'incertezza: interpretazione \\grafica} \index{Incertezza! Propagazione via metodo grafico}
+\subsection{Caso unidimensionale} \label{Propagazione incertezza in relazione lineare}
+Per semplicità consideriamo il caso unidimensionale lineare del tipo
+\begin{equation}
+ Q := a + bx
+\end{equation}
+\`{E} facile verificare che:
+\begin{equation}
+\sigma[Q] = | b | \sigma[x]
+\end{equation}
+Il valore assoluto della pendenza della legge lineare converte $ \sigma [x] \to \sigma[Q]$
+Generalizzando ora una legge non lineare:
+\begin{equation}
+ Q := f(x)
+\end{equation}
+Sappiamo che $ \delta x $ dipende dal punto $ x_o $ in cui è calcolato e che $ \delta x \propto $ pendenza locale derivata di $ f(x) $. Non è sbagliato pensare ad una approssimazione lineare di $ f(x) $ in un intorno di $ x_0 $:
+\begin{eqnarray}
+f(x)  &\stackrel{(\dag)}{\simeq}& f(x_0)+ \left( \frac{df}{dx}\right)_{x = x_0} (x-x_0)	\\
+&\simeq& a +b(x - x_0)
+\end{eqnarray}
+\textit{Dove su $ (\dag) $ è stato utilizzato il primo sviluppo in serie di Taylor.}\\
+Da qui posso applicare le formule di propagazione già viste\footnote{Si veda la sezione \ref{2.1_Propazagione incertezza in relaz lineare}}.
+\begin{equation}
+\sigma[Q]\simeq \left| \frac{dQ}{dx} \right|_{x = x_0} \sigma[x]
+\end{equation}
+e
+\begin{equation}
+m[Q]\simeq Q_0 = f(x_0)
+\end{equation}
+Queste formule però non sono valide in due casi:
+\begin{itemize}
+\item Se sono in un punto di massimo, minimo o flesso
+\begin{equation}
+\frac{df}{dx}= 0
+\end{equation}
+Devo quindi continuare a sviluppare in serie di Taylor.
+\item $ \sigma[x] $ è troppo grande e la $ f(x) $ non è linearizzabile con la retta tangente $ (x_0,Q_0) $
+\end{itemize}
+\subsection{Esempi}
+\begin{itemize}
+\item $ Q = x^a $ calcolo $ m[Q] $ che sarà semplicemente:
+\begin{equation}
+m[Q] \simeq x_0^a
+\end{equation}
+Invece per $ \sigma[Q] $ ottengo:
+\begin{equation}
+ \sigma[Q] \simeq \left| a\, x_0^{a-1}\right|  \sigma[x]
+\end{equation}
+L'errore relativo in questi casi è l'ideale per controllare a mente cosa ci si aspetta
+\begin{equation}
+\frac{\sigma[Q]}{Q_0} = | a | \frac{\sigma[x]}{x_0}
+\end{equation}
+\item $ Q = \ln[x] $ ovviamente definito per $ x > 0 $ si ottiene che:
+\begin{equation}
+\frac{dQ}{dx}=\frac{1}{x} \Rightarrow \sigma[Q]\simeq\frac{\sigma[x]}{x_0}
+\end{equation}
+\end{itemize}
+\section{Estensione a funzioni di più grandezze} \index{Incertezza! Propagazione con funzioni di più variabili}
+Supponiamo
+\begin{equation}
+Q := f(x,y)
+\end{equation}
+Otteniamo che:
+\begin{equation}
+Q = f(x,y) \simeq f(x_0,y_0) + \left( \frac{\partial Q}{\partial x}\right) _{x_0,y_0} (x-x_0)+\left( \frac{\partial Q}{\partial y}\right) _{x_0,y_0} (y-y_0)
+\end{equation}
+Che altro non è che lo sviluppo in serie di Taylor al primo ordine dove
+\begin{eqnarray}
+x_0:=m[x]\\
+y_0:=m[y]
+\end{eqnarray}
+Quindi vale che:
+\begin{eqnarray}
+m[Q]\simeq Q_0 = f(x_0,y_0) \\
+\sigma[Q] \simeq \sqrt{\left|\frac{\partial Q}{\partial x} \right|^2_{x_0,y_0} \sigma^2[x]+\left|\frac{\partial Q}{\partial y} \right|^2_{x_0,y_0} \sigma^2[y]}
+\end{eqnarray}
+\subsection{Esempi}
+\begin{itemize}
+\item $ Q = xy $ abbiamo quindi che:
+\begin{equation}
+m[Q]\simeq Q_0 = x_0y_0
+\end{equation}
+A patto che $ x $ e $ y $ siano statisticamente indipendenti:
+\begin{equation}
+\sigma[Q] \simeq \sqrt{|y_0|^2 \sigma^2[x]+|x_0|^2 \sigma^2[y]}
+\end{equation}
+Con errore relativo:
+\begin{equation}
+\frac{\sigma[Q]}{|Q_0|} = \sqrt{\left( \frac{\sigma[x]}{|x_0|}\right)^2+\left( \frac{\sigma[y]}{|y_0|}\right)^2 }
+\end{equation}
+\item $ Q = x^ay^b $ abbiamo che:
+\begin{equation}
+m[Q]\simeq Q_0 = x_0^ay_0^b
+\end{equation}
+E quindi
+\begin{align}
+\sigma[Q]&\simeq\sqrt{a^2|x_0|^{2(a-1)}|y_0|^{2b}\sigma^2[x]+b^2|x_0|^{2a}|y_0|^{2(b-1)}\sigma^2[y]}\\
+&\simeq |Q_0|\sqrt{a^2 \frac{\sigma^2[x]}{|x_0|^2}+b^2 \frac{\sigma^2[y]}{|y_0|^2}}
+\end{align}
+Con errore relativo:
+\begin{equation}
+\frac{\sigma[Q]}{|Q_0|}\simeq \sqrt{\left( a \frac{\sigma[x]}{x_0} \right)^2 +\left( b  \frac{\sigma[y]}{y_0} \right)^2}
+\end{equation}
+\end{itemize}
+\subsection{Propagazione dell'incertezza su misure dirette non statisticamente indipendenti} \index{Incertezza! Propagazione caso generale}
+Si utilizza lo stesso sviluppo per linearizzare:
+\begin{equation}
+Q = f(x,y) \simeq f(x_0,y_0) + \left( \frac{\partial Q}{\partial x}\right)_{x_0,y_0}  (x-x_0)+\left( \frac{\partial Q}{\partial y}\right)_{x_0,y_0}  (y-y_0)
+\end{equation}
+Ottengo poi:
+\begin{equation}
+D[Q] \simeq \left|\frac{\partial Q}{\partial x} \right|_{x_0,y_0} \sigma^2[x]+\left|\frac{\partial Q}{\partial y} \right|_{x_0,y_0} \sigma^2[y]+2\left( \frac{\partial Q}{\partial x} \right)_{x_0,y_0} \left( \frac{\partial Q}{\partial y} \right)_{x_0,y_0} \sigma_{xy}
+\end{equation}
+Dove  $ \sigma_{xy} $ è la covarianza\footnote{Per la definizione di covarianza si veda l'equazione \eqref{eq_2.14 definizione di covarianza}} che maggioreremo con $ D[x]D[y] $. Sia $ m^* [x]$ operatore di media campionaria, lineare cioè 
+\begin{eqnarray}
+m^*[ax+by] &=& \frac{1}{N}\sum (ax_i+by_i) = a \frac{1}{N}\sum x_i+ b \frac{1}{N}\sum y_i\\
+&=& am^*[x]+bm^*[y]
+\end{eqnarray}
+Considero $ A(t) $ definito come
+\begin{equation}
+A(t):=m^*[\{(x-m^*[x])+t(y-m^*[y])\}^2]\geq0 \qquad \forall t \in \mathbb{R}
+\end{equation}
+Considero $ t $ definito come
+\begin{equation}
+t:= -\frac{\sigma_{xy}^*}{D^*[y]}
+\end{equation}
+Con:
+\begin{equation}
+\sigma_{xy}^*:=m^*[(x-m^*[x])(y-m^*[y])]
+\end{equation}
+e
+\begin{equation}
+D^*[y]:= m^*\left[ (y-m^*[y])^2\right] 
+\end{equation}
+\begin{align}
+0\leq A(-\frac{\sigma_{xy}^*}{D^*[y]})  = & m^*\left[ \left\lbrace \left( x-m^*[x]\right) -\frac{\sigma_{xy}^*}{D^*[y]}\left( y-m^*[y]\right) \right\rbrace ^2\right]  \\
+= & m^*\left[ (x-m^*[x])^2\right]  \label{eq_2.90_dimostrazione covarianza} \\ 
+&+ m^*\left[ -2\frac{\sigma_{xy}^*}{D^*[y]}(x-m^*[x])(y-m^*[y])\right] \label{eq_2.91_dimostrazione covarianza} \\
+&+ m^*\left[ \left( \frac{\sigma^*_{xy}}{D^*[y]} \right)^2 (y-m^*[x])^2 \right]  \label{eq_2.93_dimostrazione covarizana}\\
+\stackrel{(\dag)}{=} & D^*[x] -2\frac{\sigma_{xy}^*}{D^*[y]} \sigma_{xy}^*+\left( \frac{\sigma^*_{xy}}{D^*[y]} \right)^2  D^*[y] \\
+= & D^*[x]-2\frac{\sigma_{xy}^{*2}}{D^*[y]}+\frac{\sigma_{xy}^{*2}}{D^*[y]} \Rightarrow \sigma_{xy}^{*2} \leq D^*[x]D^*[y]
+\end{align} 
+\textit{Dove su $ (\dag) $ si è sfruttato il fatto che: il primo membro in \eqref{eq_2.90_dimostrazione covarianza} è $ D^*[x] $, il secondo membro in \eqref{eq_2.91_dimostrazione covarianza} è la covarianza $ \sigma_{x,y}^* $ e l'ultimo termine in \eqref{eq_2.93_dimostrazione covarizana} è $ D^*[y] $}.\\
+Nel caso non sia facile stimare la covarianza è possibile dare una sovrastima dell'incertezza propagata a $ Q = f(x,y) $ \index{Incertezza! Sovrastima dell'incertezza}
+\begin{align}
+D[Q] & \simeq \left| \frac{\partial Q}{\partial x} \right|^2 \sigma^2[x]+\left| \frac{\partial Q}{\partial y} \right|^2 \sigma^2[y] + 2 \left( \frac{\partial Q}{\partial x} \right)_{x_0,y_0} \left( \frac{\partial Q}{\partial y} \right)_{x_0,y_0} \sigma_{xy} \\
+& \leq  \left| \frac{\partial Q}{\partial x} \right|^2 \sigma^2[x]+\left| \frac{\partial Q}{\partial y} \right|^2 \sigma^2[y] + 2 \left( \frac{\partial Q}{\partial x} \right) \left( \frac{\partial Q}{\partial y} \right) \sigma_{xy} \\
+& \leq \left| \frac{\partial Q}{\partial x} \right|^2 \sigma^2[x]+\left| \frac{\partial Q}{\partial y} \right|^2 \sigma^2[y] + 2 \left( \frac{\partial Q}{\partial x} \right) \left( \frac{\partial Q}{\partial y} \right) \sigma[x] \sigma[y]\\
+& = \left[ \left| \frac{\partial Q}{\partial x} \right| \sigma[x] + \left| \frac{\partial Q}{\partial y} \right| \sigma[y] \right]^2
+\end{align}
+Si ha quindi che:
+\begin{equation}
+\sigma[Q]\lesssim \left| \frac{\partial Q}{\partial x} \right| \sigma[x]+\left| \frac{\partial Q}{\partial y} \right| \sigma[y]
+\end{equation}
+ovvero la somma lineare dei sigma pesata con le derivate parziali
+\chapter{Regressione lineare e FIT} \index{Fit}
+Supponiamo di avere una legge che correli due grandezza fisiche del tipo:
+\begin{equation}
+y = f(x)
+\end{equation}
+La procedura che prevede l'analisi dei dati sperimentali al fine di risalire alla legge è detta \textbf{FIT} cioè ''adattare''. Anche in questo caso per semplicità assumiamo una relazione lineare del tipo:
+\begin{equation}
+y = a +bx
+\end{equation}
+\section{Metodo di minima e massima pendenza} \index{Fit! Metodo di massima e minima pendenza}
+Se suppongo di avere un grafico raffigurante la legge lineare con tanto di barre d'errore:
+\begin{itemize}
+\item Traccio le \textbf{rette di minima e massima} pendenza ovvero le rette passanti per tutte le barre d'errore con pendenza rispettivamente minima e massima.
+\item Misuro graficamente i parametri di intercetta e pendenza rispettivamente:
+\begin{equation}
+(a_{min};b_{min}) \textit{ retta di minima pendenza}
+\end{equation}
+\begin{equation}
+(a_{max};b_{max}) \textit{ retta di massima pendenza}
+\end{equation}
+\item Stimo i parametri della legge prendendo la media dei valori:
+\begin{eqnarray}
+b &:=& \frac{b_{min}+b_{max}}{2} \qquad \qquad \delta b \sim \frac{\left| b_{max}-b_{min} \right| }{2}\\
+a &:=& \frac{a_{min}+a_{max}}{2} \qquad \qquad \delta a \sim \frac{\left| a_{max}-a_{min} \right| }{2}
+\end{eqnarray}
+\end{itemize}
+Questo metodo ha il vantaggio di essere molto facile da esegue però ha dei punti a sfavore non trascurabili:
+\begin{itemize}
+\item La decisione della compatibilità delle rette di minima e massima pendenza è soggettiva:
+\begin{itemize}
+\item nel caso di incertezza tipo, non è assicurato che i valori siano interni alle rette di minima e massima pendenza.
+\item solo nel caso di massima incertezza la ricetta non è ambigua.
+\end{itemize}  
+\item L'interpretazione di $ \delta b $ e $ \delta a $ non è chiara: non sono ne scarti massimi ne errori.
+\item Mancano criteri oggettivi sulla decisione di compatibilità dei dati con una legge lineare.
+\end{itemize}
+\section{Metodo dei minimi quadrati} \index{Fit! Metodo dei minimi quadrati}
+Il metodo dei minimi quadrati si propone come alternativa al metodo precedente. Questo metodo infatti ha la funzione di trovare i parametri della legge che più si adattano ai dati sperimentali ed è una figata. Consideriamo:
+\begin{itemize}
+\item $ (x_i,y_i) :=$ \textit{N dati sperimentali}
+\item $ y(x) :=a+bx =$ \textit{Legge da stimare}
+\end{itemize}
+Definiamo la grandezza $ \chi^2 $ considerando:
+\begin{itemize}
+\item la discrepanza i-esima dei dati dalla legge che si traduce in
+\begin{equation}
+\left( y_i - y\left( x_i\right)  \right)^2 = \left( y_i -a -bx_i \right)^2 
+\end{equation}
+\item la varianza $ \sigma^2_{yi} $ del dato i-esimo
+\end{itemize}
+Si ottiene:
+\begin{equation}
+\frac{\left(y_i -y(x_i) \right)^2 }{\sigma_{yi}^2}
+\end{equation}
+Per ora assumiamo che l'unica incertezza sia quella su $ y_i $, risolveremo dopo il caso generale.
+Definisco $ \chi^2 $ come: \index{$ \chi^2 $}
+\begin{equation}
+\chi^2 := \sum\limits_{i = 0}^{N} \frac{\left( y_i - y(x_i) \right)^2 }{\sigma_{yi}^2}
+\end{equation}
+Ora tento di minimizzare il $ \chi^2 $ in funzione dei parametri della legge $ y(x) $ nel caso lineare quindi rispetto $ a +bx $.
+\begin{equation} 
+\left\{
+\begin{aligned}
+\dfrac{\partial \chi^2}{\partial a} = 0\\
+\dfrac{\partial \chi^2}{\partial b} = 0
+\end{aligned}
+\right.
+\end{equation} 
+\subsection{Caso di proporzionalità diretta}
+Supponiamo che la legge da adattare sia del tipo:
+\begin{equation}
+y(x) = bx
+\end{equation}
+La nuova grandezza $ \chi^2 $ sarà quindi
+\begin{equation} 
+\chi^2 = \sum\limits_{i = 1}^{N}\frac{(y_i -bx_i)^2}{\sigma_{yi}^2}
+\end{equation}
+Che si traduce a una equazione risolvibile per valori di $ b $. Minimizzando rispetto a $ b $ quindi:
+\begin{equation}
+0 = \frac{\partial \chi^2}{\partial b} = \sum\limits_{i = 1}^{N}\frac{1}{\sigma_{iy}^2}2(y_i - bx_i)(-x_i)= 2b\sum\limits_{i = 1}^{N}\dfrac{x_i^2}{\sigma_{yi}^2} - 2 \sum\limits_{i = 1}^{N}\frac{x_i y_i}{\sigma_{yi}^2}
+\end{equation}
+Da cui
+\begin{equation}
+b =  \dfrac{\sum\limits_{i = 1}^{N}\dfrac{x_iy_i}{\sigma_{yi}^2}}{\sum\limits_{i = 1}^{N}\dfrac{x_i^2}{\sigma_{yi}^2}}
+\end{equation}
+L'incertezza su $ b $ ovvero $ \sigma_b $ è:
+\begin{equation}
+\sigma_b^2 = \sum\limits_{i = 0}^{N} \left| \frac{\partial b}{\partial y_i} \right|^2 \sigma_{yi} ^2 = \dfrac{1}{\left( \sum\limits_{i = 1}^{N}\dfrac{x_i^2}{\sigma_{yi}^2}\right)^2 } \sum\limits_{i = 1}^{N}\left| \frac{x_i}{\sigma_{yi}^2} \right|^2 
+\end{equation}
+Assumendo che le $ y_i $ siano statisticamente indipendenti
+\begin{equation}
+\sigma_{yi}^2 = \dfrac{1}{\left( \sum\limits_{i = 1}^{N}\dfrac{x_i^2}{\sigma_{yi}^2}\right)^2 }\sum\limits_{i = 1}^{N} \left( \frac{x_i^2}{\sigma_{yi}^2} \right) 
+\end{equation}
+Quindi $ \sigma_b $ diventa
+\begin{equation}
+\sigma_b = \sqrt{\dfrac{1}{\sum\limits_{i = 1}^{N}\frac{x_i^2}{\sigma_{yi}^2}}}
+\end{equation}
+Osservazioni:
+\begin{itemize}
+\item $ \sigma_b \propto \sigma_y $
+\item $ \sigma_b $ si abbassa la crescere del numero dei dati.
+\item $ \sigma_b \propto (\textit{discrepanza}^2 \textit{ media degli }x_i \textit{ rispetto all'origine})^{-1}$ 
+\end{itemize}
+Per tenere condo delle incertezze sulle $ x_i $ e per renderle confrontabili con le $ y_i $:
+\begin{itemize}
+\item Propagare l'incertezza da $ x $ a $ y(x) $ se la legge è lineare si operi come su \ref{Propagazione incertezza in relazione lineare}.
+\item Comporre l'incertezza su $ y_i $ ovvero:
+\begin{equation}
+\sigma_{yi \ tot}^2 = \sigma_{yi\ originale}^2 + \sigma_{y_i \ trasferita}^2
+\end{equation}
+\end{itemize}
+Osservazioni:
+\begin{itemize}
+\item Per trasferire l'incertezza serve una stima preliminare di $ b $ o $ \left| \frac{dy}{dx} \right|_{x_i} $ che può venire da una stima tramite rette di massima o minima pendenza oppure da un fit preliminare senza considerare $ \sigma_{xi} $.
+\item Basta una stima di $ \sigma_{yi \ tot} $ con una due cifre significative.
+\end{itemize}
+\subsection{Riepilogo procedura fit minimi quadrati} \index{Fit! Riepilogo procedura}
+\begin{itemize}
+\item stima preliminare di $ b $ o di  $ \left| \frac{dy}{dx} \right|_{x_i} $ tramite:
+\begin{itemize}
+\item fit preliminare
+\item retta di massima e minima pendenza
+\end{itemize}
+\item trasferire l'incertezza da $ x_i $ a $ y_i $ tramite
+\begin{equation}
+\sigma_{yi \ trasferito } = |b|\sigma_{xi} \qquad \sigma_{yi \ trasferito } \simeq \left| \frac{dy}{dx} \right|_{x_i} \sigma_{xi}
+\end{equation}
+\item controllare se $ \sigma_{yi \ trasferito} $ è trascurabile rispetto $ \sigma_{yi \ originale} $
+\begin{itemize}
+\item Se è trascurabile esegui il fit considerando solo gli errori nativi su $ y_i $
+\item Se non è trascurabile rifaccio il fit da capo usando usato il nuovo $ \sigma_{tot}  $
+\begin{equation}
+\sigma_{yi \ tot}^2 = \sigma_{yi\ originale}^2 + \sigma_{y_i \ trasferita}^2
+\end{equation}
+\end{itemize}
+\item Controllo che il risultato sia compatibile con il valore utilizzato per trasferire l'incertezza.
+\begin{itemize}
+\item Se è compatibile tengo il risultato del fit.
+\item Se non è compatibile trasferisco l'incertezza con il nuovo valore.
+\end{itemize}
+\end{itemize}
+\subsection{Valutazione della legge} \index{Fit! valutazione della legge}
+Minimizzare il $ \chi^2 $ permette di calcolare i parametri che meglio si adattano alla legge. Bisogna però verificare la bontà di questo adattamento. Se $ y(x) $ è corretta allora \begin{equation}
+m[y_i] = y(x_i)
+\end{equation}
+e se la stima della varianza è corretta
+\begin{equation}
+m[\sigma_{yi}^2] = D[y_i]
+\end{equation}
+Da cui
+\begin{equation}
+m[\chi^2]= \sum\limits_{i = 1}^{N}m\left[ \frac{(y_i -y(x_i))^2}{\sigma_{yi}^2}\right]   \stackrel{(\dag)}{=} \sum\limits_{i = 1}^{N} 1 = N
+\end{equation}
+\textit{su $ (\dag) $ si è utilizzato il fatto che:}
+\begin{equation}
+m[(y_i - y_(x_i))^2] = D[y_i]
+\end{equation}
+In realtà $ m[\chi^2] $ = \textbf{gradi di liberà} cioè :
+\begin{equation}
+\nu := N- \textit{ numero parametri calcolati dai dati}
+\end{equation}
+Il $ \chi^2 $ atteso fluttua di:
+\begin{equation}
+\sigma[\chi^2] = \sqrt{2 \nu}
+\end{equation}
+sotto le ipotesi:
+\begin{itemize}
+\item $ N $ dati indipendenti
+\item $ \sigma^2_{yi \ tot} $ siano le varianza degli $ y_i $
+\item La legge è corretta: $ m[y_i]  = y(x_i)$
+\end{itemize}
+allora il $ \chi^2 $ ha distribuzione limite:
+\begin{itemize}
+\item $ m[\chi^2] = \nu $
+\item $ \sigma[\chi^2] = \sqrt{2\nu} $
+\end{itemize}
+\section{Test del Chi2} \index{$ \chi^2 $! Test}
+Scopo: verificare come il $ \chi^2 $ sperimentale sia compatibile con la distribuzione limite teorica
+\begin{equation}
+\chi^2_{teo} \sim \nu \pm \sqrt{2 \nu}
+\end{equation}
+\begin{itemize}
+\item Discutere la compatibilità calcolando la discrepanza:
+\begin{equation}
+|R| := | \chi^2_{oss} - \nu | \leq k\sqrt{2 \nu}
+\end{equation}
+\begin{itemize}
+\item La relazione fra il fattore di copertura $ k $ e la probabilità di falso allarme è complicata, dipende dal valore di $ \nu $
+\item Per $ \nu $ bassi può succedere che $ \nu - k \sqrt{2\nu} < 0$ e quindi oltrepassa il bordo del dominio
+\end{itemize}
+\item Discutere la compatibilità in termini di intervallo corrispondente ad un certa probabilità fissata $ 1 - \textit{probabilità di falso allarme} $ utilizzando i quantili e i percentili della distribuzione $ \chi^2 $. A parità di scelta di probabilità di falso allarme complessiva, si ha la libertà di assegnare l'intervallo alla coda alta piuttosto che a quella bassa; si può fare come si vuole perfino stabilire un intervallo con un'unica soglia superiore\footnote{Consigliabile nel caso in cui $ \nu \lesssim 8 $}. Non è consigliabile in tutti i casi ripartire la probabilità di falso allarme in parti uguali. 
+\end{itemize}
+\subsection{Calcolo del Chi2 dal grafico}
+\`{E} bene controllare il risultato del $ \chi^2 $ ad occhio quando le barre d'errore sono visibili misurando quanto vale la discrepanza della legge in termini di \\$ (\textit{numero di sigma})^2 $. Nel caso in cui le incertezze non fossero visibili dal grafico è bene plottare i residui dei dati rispetto alla legge. Anche plottare in un instogramma i singoli contributi $ \chi^2_i $ dovuti ai singoli punti può risultare utile. Se viene riscontrato che uno o pochi dati contribuiscono in modo dominante al $ \chi^2_{oss} $ allora:
+\begin{itemize}
+\item Bisogna ricontrollare quelle misure e se non si può
+\item Considerare di escludere quelle misure a condizione che:
+\begin{itemize}
+\item venga dichiarato esplicitamente.
+\item si tratti di una misura riconducibile a qualche anomalia nell'esperimento e che non sia una caratteristica del fenomeno che sto studiando.
+\end{itemize}
+\end{itemize}
+\subsection{Test del Chi2: casi possibili} \index{$ \chi^2 $! Casistica del test}
+\begin{enumerate}
+\item $ \chi^2_{oss} \in$ \textit{intervallo di compatibilità con la distibuzione teorica}. Cioè
+\begin{equation}
+\nu - k\sqrt{2\nu}\leq \chi^2_{oss}\leq\nu + k\sqrt{2\nu}
+\end{equation}
+oppure
+\begin{equation}
+\chi^2_{oss}\in\left[ \chi^2_{inf};\chi^2_{sup} \right] 
+\end{equation}
+Accetto il risultato del fit:
+\begin{itemize}
+\item la legge è in accordo con i dati
+\item i parametri calcolati dal fit e le loro incertezze sono accettati
+\end{itemize}
+\item $ \chi^2_{oss} $ è troppo alto. Cioè
+\begin{equation}
+\chi^2_{oss} > \nu + k \sqrt{2\nu}
+\end{equation}
+oppure
+\begin{equation}
+\chi^2_{oss} > \chi^2_{sup}
+\end{equation}
+\begin{itemize}
+\item La legge è sbagliata?
+\item Sottostimo le incertezze di $ \sigma_{yi}^2 $?
+\end{itemize}
+Non posso accettare i valori calcolati e i parametri, in particolare sono da rigettare le incertezze. Calcolo le incertezze a posteriori ovvero impongo
+\begin{equation}
+\chi^2_{oss} = \nu
+\end{equation}
+\item $ \chi^2_{oss} $ è troppo basso. Cioè
+\begin{equation}
+\chi^2_{oss}<\nu - k\sqrt{2\nu}
+\end{equation}
+oppure
+\begin{equation}
+\chi^2_{oss}<\chi^2_{inf}
+\end{equation}
+La legge si adatta troppo ai dati ovvero la forma della legge è buona e quindi accetto i parametri ma metto in dubbio le incertezze: potrei aver sovrastimato $ \sigma_{yi} $. Calcolo a posteriori i $ \sigma_{yi} $ che mettono a posto il $ \chi^2 $.
+\end{enumerate}
+Sia nel caso $ 2 $ che nel caso $ 3 $ ricalcolo gli errori $ \sigma_{yi}^2 $ a posteriori: se non si vuole rinunciare alla forma della legge bisogna convincere che i nuovi $ \sigma_{iy}^2 $ a posteriori sono:
+\begin{itemize}
+\item Corretti, lo dimostro con un nuovo esperimento che li misuri direttamente.
+\item Plausibili, discutendo quantitativamente che il loro valore è fisicamente ragionevole.
+\end{itemize}
+In ogni caso, tutte le volte che accetto una determinazione a posteriori devo rifare il fit e prendere come risultati i nuovi valori dei parametri e relative incertezze. Non ha più alcun senso rifare il test del $ \chi^2 $.
+\subsection{Determinazione a posteriori delle incertezze} \index{Fit! Calcolo incertezze a posteriori} \index{$ \chi^2 $! Calcolo incertezze a posteriori}
+\begin{itemize}
+\item Ipotizzando che $ \sigma_{yi}^2 $ siano uguali impongo che
+\begin{equation}
+\frac{1}{\sigma_y^2} \sum\limits_{i = i}^{N} (y_i - y(x_i))^2 = \nu
+\end{equation}
+Ottengo che:
+\begin{equation}
+\sigma_{y \ a \, posteriori}^2 = \frac{\sum\limits_{i = i}^{N} (y_i - u(x_i))^2}{\nu} = \frac{\chi^2_{oss}}{\nu}\sigma_{yi\ a \, priori}^2
+\end{equation}
+\item Determinare un fattore moltiplicativo $ k $ uguale per tutte le varianze
+\begin{equation}
+\sigma_{yi\ a \, priori}^2 \to k \sigma_{y \ a \, posteriori}^2
+\end{equation}
+Qualora non fosse possibile considerare uguali le varianza sui dati
+\begin{equation}
+\frac{\chi^2_{oss}}{k} = \sum\limits_{i = 1}^{N} \dfrac{(y_i - y(x_i))^2 }{k \sigma_{yi}^2} = \nu
+\end{equation}
+Da cui 
+\begin{equation}
+k = \frac{\chi^2_{oss}}{\nu}
+\end{equation}
+\item Altra variante possibile è
+\begin{equation}
+\sigma_{yi\ a \, priori}^2 \to (\sigma_{yi}^2+\sigma^2)_{a \, posteriori}
+\end{equation}
+Sostanzialmente aggiungo una varianza uguale a tutti i punti.
+\begin{equation}
+\sum\limits_{i = 0}^{N} \frac{\left( y_i - y(x_i) \right)^2 }{\sigma_{yi}^2+\sigma} = \nu
+\end{equation}
+Vado per tentativi nel trovare $ \sigma $
+\end{itemize}
+\section{Esempi di fit}
+\subsection{Legge costante}
+Supponiamo di adattare i dati sperimentali ad un legge costante del tipo
+\begin{equation}
+y = a
+\end{equation}
+Il $ \chi^2 $ diventa quindi
+\begin{equation}
+\chi^2 = \sum\limits_{i = 1}^{N} \frac{(y_i -a)^2}{\sigma_i^2}
+\end{equation}
+Minimizzo il $ \chi ^2 $ ovvero
+\begin{equation}
+0 = \frac{\partial \chi^2}{a} = -2 \sum\limits_{i = 1}^{N} \frac{(y_i -a)}{\sigma_i^2} = -2 \left[ \sum\limits_{i = 1}^{N}\frac{y_i}{\sigma_i^2}-a\sum\limits_{i = 1}^{N}\frac{1}{\sigma_i^2} \right] 
+\end{equation}
+Da cui
+\begin{equation}
+a = \dfrac{\sum\limits_{i = 1}^{N} \frac{y_i}{\sigma_i^2}}{\sum\limits_{i = 1}^{N} \frac{1}{\sigma_i^2}}
+\end{equation}
+Mentre le incertezze su $ a $
+\begin{equation}
+\sigma_a = \sqrt{\frac{\sum\limits_{i = 1}^{N}\frac{1}{\sigma_i^4}\sigma_i^2}{\left(\sum\limits_{i = 1}^{N}\frac{1}{\sigma_i^2} \right)^2 }} = \frac{1}{\sqrt{\sum\limits_{i = 1}^{N} \frac{1}{\sigma_i^2}}}
+\end{equation}
+Questo risultato richiama la media pesata con pesi
+\begin{equation}
+w_i = \frac{1}{\sigma_i^2}
+\end{equation}
+Abbiamo ottenuto infatti che la media pesata è il risultato del metodo dei minimi quadrati per questo è fondamentale eseguire sempre il test del $ \chi^2 $ sulla media pesata prima di usare i risultati; in particolare se il $ \chi^2 $ non è accettabile non posso usare il risultato della media pesata.
+Nel caso decidessi di tenere buona la legge $ y = a $ ma metto in dubbio le stime di incertezza:
+\begin{itemize}
+\item Non mi fido per nulla delle stime di $ \sigma_i^2 $ a priori:
+\begin{itemize}
+\item Calcolo la media campionaria:
+\begin{equation}
+m^* = a
+\end{equation}
+non dipende dalle incertezze a priori
+\item Calcolo la deviazione
+\begin{equation}
+\tilde{\sigma} = \frac{1}{N-1} \sum\limits_{i = 1}^{N}(y_i -a)^2
+\end{equation}
+notare che al denominatore $ N - 1  = \nu$
+\end{itemize}
+Questo procedimento è identico ad ipotizzare varianze uguali e calcolarle a posteriori.
+\item Non posso considerare uguali le stime $ \sigma_i^2 $ a priori:
+\begin{itemize}
+\item Posso tenere la formula della media pesata allargando tutte le incertezze di uno stesso fattore moltiplicativo
+\begin{equation}
+w_i = \frac{1}{k \sigma_i^2}
+\end{equation}
+dovrò discutere della plausibilità delle nuove incertezze. 
+\end{itemize}
+A differenza della procedura precedente questa stima richiede una discussione.
+\end{itemize}
+\part{Probabilità}
+\chapter{Introduzione ai fenomeni aleatori} \index{Fenomeni aleatori}
+\section{Fenomeni aleatori}
+I fenomeni aleatori o casuali si realizzano in modo non completamente predicibile, la trattazione deterministica è inapplicabile perché:
+\begin{itemize}
+\item Sussistono dei limiti pratici:
+\begin{itemize}
+\item Difficoltà a ricostruire le condizioni iniziali, questo significa incertezza di predizione sull'evoluzione del fenomeno.
+\item Errori di misura\footnote{Come gli errori di tipo \textit{A}.}.
+\item Modello di valutazione troppo complesso\footnote{Si pensi al lancio del dato, è improponibile creare un modello adeguato.}.
+\end{itemize}
+\item La natura del fenomeno non è deterministica;
+\begin{itemize}
+\item Meccanica quantistica\footnote{Si pensi alla particella come funzione d'onda, non come punto materiale.}.
+\end{itemize}
+\item Si è interessati a descrivere quantità medie del fenomeno
+\begin{itemize}
+\item Meccanica statistica, proprietà macroscopiche di un sistema di molti corpi.
+\end{itemize}
+\end{itemize}
+Si hanno a disposizione due approcci complementari:
+\begin{itemize}
+\item Teoria della probabilità: predico i possibili risultati a a partire dai modelli teorici.
+\item Statistica: dalle osservazioni, risalgo ai possibili modelli.\footnote{Per esempio un FIT.}
+\end{itemize}
+\section{Teoria della probabilità} \index{Probabilità}
+Definiamo:
+\begin{itemize} \index{Probabilità! Esito}
+\item l'\textbf{esito} di una prova come: \textbf{risultato di un fenomeno aleatorio}.
+\item lo \textbf{spazio campionari}: generalmente indicato con $ \mathcal{S} $ come l'insieme di tutti gli esiti possibili. Lo spazio campionario può essere costituito da un numero di esiti: \index{Probabilità! Spazio campionario}
+\begin{itemize}
+\item finiti come $ N $ misure ripetute
+\item infiniti numerabile come il lancio del dado finché non esce il numero $ 6 $
+\item infinito non numerabile come il tempo necessario prima che una apparecchiatura si guasti
+\end{itemize} \index{Probabilità! Evento}
+\item l'\textbf{evento}: sottoinsieme di $ \mathcal{S} $ ovvero un insieme di esiti.
+\end{itemize}
+Supponendo $ A $ come evento valgono le seguenti affermazioni:
+\begin{itemize} \index{Probabilità! Classificazione eventi}
+\item Se $ A $ è un \textbf{evento certo} allora $ A := \mathcal{S} $
+\item Se $ A $ è un \textbf{evento impossibile} allora $ A := \phi $
+\item Se $ \bar{A} $ è un \textbf{evento complementare} di $ A $ allora $ \bar{A}:= \mathcal{S}-A $
+\end{itemize}
+Definiamo le principali operazioni tra eventi:
+\begin{itemize} \index{Probabilità! Somma di eventi}
+\item \textbf{Somma di eventi}: supponendo 
+\begin{equation}
+C: = A+B
+\end{equation} 
+l'evento somma si realizza quando si realizza $ A $ \textit{oppure} quando si realizza $ B $.
+\begin{equation}
+C = A \cup B
+\end{equation}
+\index{Probabilità! Prodotto di eventi}
+\item \textbf{Prodotto di eventi}: supponendo
+\begin{equation}
+C:= AB
+\end{equation}
+l'evento prodotto si realizza quando si realizza $ A $ \textit{e} quando si realizza $ B $.
+\begin{equation}
+C = A \cap B
+\end{equation}
+
+\end{itemize}
+$ A $ e $ B $ si dicono \textbf{incompatibili} se: \index{Probabilità! Incompatibiltà tra eventi}
+\begin{equation}
+A \cup B = \phi
+\end{equation}
+\section{Definizione assiomatica della probabilità} \index{Probabilità! Definizione assiomatica}
+La probabilità di un evento è un numero reale $ P $ che soddisfa tre assiomi:
+\begin{enumerate}
+\item 
+\begin{equation}
+\forall A\qquad P(A) \geq 0
+\end{equation}
+\item 
+\begin{equation}
+P(\mathcal{S})=1
+\end{equation}
+\item 
+\begin{equation}
+\forall A,B \ \textit{incompatibili} \qquad P(A+B) = P(A)+P(B)
+\end{equation}
+\end{enumerate}
+\begin{itemize}
+\item \`{E} una definizione astratta ovvero ci lascia libertà nella assegnazione della probabilità agli eventi
+\item Dai tre assiomi si ricavano tutte le altre proprietà della probabilità:
+\begin{itemize}
+\item \begin{equation}
+\mathcal{S} = A + \bar{A}
+\end{equation}
+Da cui
+\begin{equation}
+P(A+\bar{A}) = P(A) + P(\bar{A}) = 1
+\end{equation}
+Quindi è vero che
+\begin{equation}
+\forall A \qquad P(A) \leq 1 \Rightarrow P \in[0,1]
+\end{equation}
+Per concludere
+\begin{equation}
+P(\bar{A}) = 1 - P(A)
+\end{equation}
+\item \begin{equation}
+A + \phi = A
+\end{equation}
+Da cui
+\begin{equation}
+P(A) = P(A)+ P (\phi) \Rightarrow P(\phi) = 0
+\end{equation}
+Ovvero la probabilità dell'evento impossibile è nulla.
+\item 
+\begin{equation}
+A \subset B
+\end{equation}
+Implica
+\begin{align}
+B =& A+ (B-A) \Rightarrow P(B)\\=&P(A)+P(B-A) \geq 0 \Rightarrow P(A) \leq P(B)
+\end{align}
+\end{itemize}
+\end{itemize}
+\subsubsection{Probabilità della somma di eventi qualunque} \index{Probabilità! Somma di eventi qualunque}
+La somma di eventi qualunque è così definita:
+\begin{equation}
+\forall A,B \subset \mathcal{S}
+\end{equation}
+Vale che:
+\begin{equation}
+P(A+B) = P(A)+P(B)-P(AB)
+\end{equation}
+\subsection{Interpretazione della probabilità classica o a priori} \index{Probabilità! Interpretazione classica}
+\begin{equation}
+\forall A \subset \mathcal{S}
+\end{equation}
+Vale che:
+\begin{equation}
+P(A) := \dfrac{\textit{numero di esiti favorevoli}}{\textit{numero di esiti possibili}}= \frac{m_A}{M_\mathcal{S}}
+\end{equation}
+\begin{itemize}
+\item Viene detta a priori perché non richiede di compiere alcuna osservazione.
+\item Le ipotesi necessarie per applicare questa interpretazione sono:
+\begin{itemize}
+\item Gli esiti devono essere \textbf{mutualmente esclusivi}\footnote{Si realizzano uno per volta.}.
+\item Gli esiti devono essere \textbf{equiprobabili}.
+\end{itemize}
+\item Osserviamo che soddisfa i tre assiomi:
+\begin{enumerate}
+\item 
+\begin{equation}
+\frac{m_A}{M_\mathcal{S}} \geq 0
+\end{equation}
+\item 
+\begin{equation}
+\frac{M_\mathcal{S}}{M_\mathcal{S}} = 1
+\end{equation}
+\item 
+\begin{equation}
+\frac{m_A + m_B}{M_\mathcal{S}} = \frac{m_A}{M_\mathcal{S}} +\frac{m_B}{M_\mathcal{S}} 
+\end{equation}
+\end{enumerate}
+\end{itemize}
+\subsection{Interpretazione della probabilità frequentista o a posteriori} \index{Probabilità! Interpretazione frequentista}
+Si basa sul concetto di frequenza campionaria vista sugli istogrammi\footnote{Si veda la sezione \ref{Proprità asintotiche degl istogrammi}.}.
+\begin{equation}
+\forall A \subset \mathcal{S}
+\end{equation}
+Si definisce $ P^*_A $ 
+\begin{equation}
+P^*_A := \frac{\textit{Numero di volte che si è ralaizzato A}}{\textit{Numero di ripetizione dell'osservazione}}
+\end{equation}
+Bisogna specifica però che le ripetizioni devo essere effettuate nelle medesime condizioni e devono essere indipendenti inoltre, si osserva che $ P^*_A $ è una grandezza aleatoria ovvero è soggetta a fluttuazioni nel caso si cambi il set di ripetizioni. \`{E} facile intuire che vale la seguente relazione:
+\begin{equation}
+P(A) := \lim\limits_{N \to \infty} P^*_A
+\end{equation}
+Dove $ N $ è il numero di ripetizioni e il limite è inteso nel senso delle probabilità, non del limite puntuale ovvero:
+\begin{equation}
+\forall \epsilon > 0 \qquad P\left(\left|P(A)-P_A^* \right| < \epsilon \right) \xrightarrow{N \to \infty} 1
+\end{equation}
+\begin{itemize}
+\item Il limite nel senso delle probabilità è un convergenza molto più debole rispetto alla convergenza puntuale.
+\item Le fluttuazioni di $ P^*_A $ rispetto a $ P(A) $ rimangono possibile anche con $ N $ grande solo che diventano più improbabili.
+\end{itemize}
+Riprendendo la definizione:
+\begin{itemize}
+\item Viene detta a posteriori perché richiede una osservazione.
+\item Soddisfa i tre assiomi:
+\begin{enumerate}
+\item 
+\begin{equation}
+P^*_A \geq 0 \Rightarrow P(A) \geq 0
+\end{equation}
+\item 
+\begin{equation}
+P(\mathcal{S}) = P_\mathcal{S}^* = 1
+\end{equation}
+\item 
+\begin{equation}
+\forall A, B \ \textit{incompatibili} \qquad P^*_{A+B} =P^*_A+P^*_B
+\end{equation}
+\end{enumerate}
+\item Vi è una difficoltà operativa: $ N \to \infty $ non è una condizione realizzabile quindi bisogna accontentarsi dell'approssimazione:
+\begin{equation}
+P(A) \simeq P^*_A
+\end{equation}
+\item Il campo di applicabilità è molto più vasto rispetto alla interpretazione a priori.
+\end{itemize}
+\subsection{Interpretazione soggettiva o Bayesiana della probabilità} \index{Probabilità! Interpretazione Bayesiana}
+L'interpretazione soggettiva implica la libera possibilità di dissentire in qualsiasi momento; bisogna quindi:
+\begin{itemize}
+\item Compiere assegnazioni di probabilità il più convenienti possibile per venire considerati dalla comunità scientifica.
+\item Mettere in campo tutte le proprie conoscenze e competenze.
+\end{itemize}
+L'interpretazione soggettiva è la più generale possibile:
+\begin{itemize}
+\item Non si può assegnare probabilità ai risultati di osservazioni come nel caso frequentista.
+\item Si più assegnare probabilità a \textit{teoria, modelli, ipotesi}.
+\item Bisogna soddisfare i tre assiomi:
+\begin{enumerate}
+\item Banale:
+\begin{equation}
+\forall A \qquad P(A)\geq 0
+\end{equation}
+\item Non tanto banale:
+\begin{equation}
+P(\mathcal{S}) = 1
+\end{equation}
+\item Operativamente non banale:
+\begin{equation}
+\forall A, B \ \textit{incompatibili} \qquad P(A+B) =P(A)+P(B)
+\end{equation}
+Bisogna suddividere $ \mathcal{S} $ in un set di eventi incompatibili rispettando il secondo assioma.
+\end{enumerate}
+\end{itemize}
+\subsection{Probabilità condizionata} \index{Probabilità! Condizionata ad eventi}
+Ipotizzando $ B $ un evento non impossibile, si dice \textbf{probabilità condizionata dell'evento A rispetto all'evento B} la probabilità che si realizzi $ A $ a condizione che si realizzi $ B $. La probabilità di $ A $ condizionato $ B $ si indica con:
+\begin{equation}
+P(A |B) := \frac{P(AB)}{P(B)}
+\end{equation}
+Ovvero:
+\begin{itemize}
+\item Considero $ B $ come nuovo evento certo ovvero come nuovo spazio campionario al posto di $ \mathcal{S} $.
+\item Rinormalizzo la probabilità di $ AB $ su questo nuovo spazio campionario.
+Notare che la definizione trova senso se gli eventi $ A $ e $ B $ sono compatibili altrimenti è banalmente nulla inoltre soddisfa i tre assiomi:
+\begin{enumerate}
+\item 
+\begin{equation}
+\forall A \qquad P(A|B) \geq 0
+\end{equation}
+\item $ B $ è l'evento certo infatti:
+\begin{equation}
+P(B|B)=\frac{P(B)}{P(B)} = 1
+\end{equation}
+\item $ \forall A_1, A_2 \ \textit{incompatibili} $
+\begin{align}
+P(A_1+A_2|B) &= \frac{P((A_1+A_2)B)}{P(B)} = \frac{P(A_1B+A_2B)}{P(B)} \\
+& \stackrel{(\dag)}{=} \frac{P(A_1B)}{P(B)}+\frac{P(A_2B)}{P(B)} = P(A_1|B)+ P(A_2|B)
+\end{align}
+\textit{Dove su $ (\dag) $ si è sfruttato il fatto che $ A_1 $ e $ A_2 $ sono incompatibili}
+\end{enumerate}
+\end{itemize}
+Se $ P(A)>0 $ simmetricamente
+\begin{equation}
+P(B|A) = \frac{P(AB)}{P(A)} \neq P(A|B)
+\end{equation}
+Infatti il numeratore rimane identico, cambia la normalizzazione rispetto ad $ A $ o $ B $ da cui le seguenti uguaglianze:
+\begin{equation}
+P(AB) = P(A|B)P(B) = P(B|A) P(A)
+\end{equation}
+\subsubsection{Teorema di Bayes} \index{Probabilità! Teorema di Bayes}
+Il teorema di Bayes afferma che:
+\begin{equation}
+P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+\end{equation}
+\subsubsection{Definizione di eventi indipendenti} \index{Probabilità! Eventi indipendenti}
+Siano $ A $ e $ B $ eventi compatibili non impossibili.
+$ A $ e $ B $  sono \textbf{indipendenti}:
+\begin{eqnarray}
+& \Longleftrightarrow & P(A|B) = P(A) \label{eq_eventi indipendenti 1}\\
+&\Longleftrightarrow & P(B|A) = P(B) \label{eq_eventi indipendenti 2}\\
+&\Longleftrightarrow & P(AB) = P(A)P(B)
+\end{eqnarray}
+Si ricava da \eqref{eq_eventi indipendenti 2} è \eqref{eq_eventi indipendenti 1} che la probabilità di uno non è condizionata dalla probabilità che si realizzi l'altro.
+Da non confondere con eventi incompatibili:
+\begin{equation}
+A \cap B  = \phi
+\end{equation}
+\subsubsection{Esempi di probabilità condizionata}
+\begin{itemize}
+\item Supponiamo di prendere in esame il lancio di un dado cubico. Definiamo i seguenti eventi:
+\begin{itemize}
+\item \textit{$ A:=  $ esce un numero  $ <6 $. $ P(A) = \frac{5}{6}$}
+\item \textit{$ B:= $ esce un numero pari. $ P(B)= \frac{1}{2} $}
+\end{itemize}
+\begin{equation}
+P(A|B) = \frac{P(AB)}{P(B)} = \frac{\frac{2}{6}}{\frac{3}{6}} = \frac{2}{3}
+\end{equation}
+\begin{equation}
+P(B|A) = \frac{P(AB)}{P(A)} = \frac{\frac{2}{6}}{\frac{5}{6}} = \frac{2}{5}
+\end{equation}
+\item Supponiamo di dover discutere la probabilità di guasto di un sistema ''$ B $'' composto da sottosistemi $ B_i $ che si attivano uno alla volta in maniera non predicibile ma in sequenza.
+\begin{itemize}
+\item Interpreto $ B_i $ come eventi di mutualmente incompatibili
+\item Associo a $ B_i $ una probabilità:
+\begin{equation}
+P(B_i) := \textit{Frazione media di tempo in cui } B_i \textit{ è operativo}
+\end{equation}
+\end{itemize}
+Dal teorema di Bayes ho che:
+\begin{equation}
+P(\textit{Guasto }B_i) = P(\textit{Guasto }|B_i)P(B_i)
+\end{equation}
+E quindi:
+\begin{equation}
+P(\textit{Guasto }B) = \sum\limits_{i = 1}^{N} P(\textit{Guasto }B_i)
+\end{equation}
+\item Supponiamo ora di dover discutere il problema precedente a condizione però che i sottoinsiemi funzionino in parallelo continuamente.
+\begin{equation}
+P(\textit{Guasto }B_i) = P(\textit{Guasto }|B_i) P(B_i) \stackrel{(\dag)}{=} P(\textit{Guasto }|B_i) 
+\end{equation}
+\textit{Su $ (\dag) $ si è sfruttato il fatto che $ P(B_i)=1 $}
+\begin{align}
+P(\textit{Guasto }B)  = \sum\limits_{i = 1}^{N} P(\textit{Guasto }B_i) -& \sum\limits_{coppie \ i \neq j} P(\textit{Guasto }B_i \ \textit{Guasto }B_j) \\
++& \sum\limits_{triple \ i \neq j \neq k}P(GB_i GB_j GB_k)+ \dots
+\end{align}
+Se i sottoinsiemi $ B_o $ hanno guasti indipendenti e se $ P(GB_i)\ll1 $ allora si può approssimare:
+\begin{multline}
+P(\textit{Guasto }B)\simeq \\ \simeq \sum\limits_{i = 1}^{N} P(\textit{Guasto }B_i) - \sum\limits_{coppie \ i \neq j}^{N} P(\textit{Guasto }B_i) P(\textit{Guasto }B_j)
+\end{multline}
+\end{itemize}
+\subsection{Probabilità condizionata al prodotto di eventi} \index{Probabilità! Condizionata al prodotto di eventi}
+Prendiamo in considerazioni i tre eventi realizzabili $ A_1 \ A_2 \ A_3$. Vale l'uguaglianza
+\begin{equation}
+P(A_3 | A_2 A_1) = \frac{P(A_1 A_2 A_3)}{P(A_2 A_1)}
+\end{equation}
+Consideriamo ora il prodotto dei tre eventi:
+\begin{equation}
+P(A_3A_2A_1) = P(A_3 | A_2 A_1) P(A_1A_2) = P(A_3 | A_2 A_1)P(A_2|A_1)P(A_1)
+\end{equation}
+Per induzione si può estendere al prodotto di $ N $ eventi $ A_1, A_2  ,, A_N $:
+\begin{multline}
+P(A_1 \dots A_N) =\\
+= P(A_N | A_1 \dots A_{N-1})P(A_{N-1}|A_1 \dots A_{N-2})\dots P(A_2|A_1) P(A_1)
+\end{multline}
+\subsubsection{Esempio: restrizione di $ 5 $ carte dal mazzo di $ 52 $ senza riposizione}
+Definiamo l'evento $ A $ come:
+\begin{equation}
+A := \textit{Estreggo 5 carte di cuori}
+\end{equation}
+Possiamo quindi vedere $ A $ come:
+\begin{equation}
+A = A_1A_2A_3A_4A_5
+\end{equation}
+Indicando con $ A_i $ l'estrazione i-esima di cuori.
+\begin{equation}
+P(A) = P(A_1)P(A_2|A_1)P(A_3|A_2A_1)\dots P(A_5|A_4A_3A_2A_1)
+\end{equation}
+Se l'estrazione fosse con ripetizione allora gli eventi $ A_i $ sarebbero indipendenti tra loro e quindi:
+\begin{equation}
+A = \left( \frac{1}{4}\right)^5 \sim 10^{-3}
+\end{equation}
+Considerando invece la non riposizione si ottiene:
+\begin{equation}
+\frac{13}{52}\frac{12}{51}\frac{11}{50}\frac{10}{49}\frac{9}{48} \sim 5 \times 10^{-4}
+\end{equation}
+\subsection{Teorema della probabilità totale} \index{Probabilità! Teorema della probabilità totale}
+Sia $ \mathcal{S} $ lo spazio campionario e siano $  {A_i} $ $ n $ eventi tali che:
+\begin{itemize}
+\item $ A_i $ incompatibile con $ A_j \qquad \forall i \neq j $
+\item $ {A_i} $ compongano $ \mathcal{S} $ ovvero $ \mathcal{S} = A_1 \cup A_2 \cup \dots \cup A_n$
+\end{itemize}
+Allora  $ \forall B \subset \mathcal{S} $
+\begin{equation}
+P(B) = \sum\limits_{i = 1}^{n}P(B|A_i)P(A_i)
+\end{equation}
+Dimostrazione:
+\begin{equation}
+B = \sum\limits_{i = 1}^{n} BA_i 
+\end{equation}
+Con $ BA_i $ incompatibile con $ BA_j \quad \forall i \neq j$\\
+L'impiego principale si ha con il teorema di Bayes:
+\begin{equation}
+P(A|B) = \frac{P(B|A)P(A)}{\sum\limits_{i = 1}^{n}P(B|A_i)P(A_i)}
+\end{equation}
+\section[Teorema di Bayes e interpretazione soggettiva]{Applicazione del teorema di Bayes nell'interpretazione soggettiva della probabilità} \index{Probabilità! Applicazione teorema della probabilità totale}
+Lo scopo è assegnare la probabilità a posteriori di ipotesi/teorie tenendo conto dei risultati di una osservazione sperimentale per decidere quali teorie considerare e quali scartare.
+\begin{multline}
+P(\textit{Teoria}_k| \textit{Osservazione}) = \\=P(\textit{Osservazione}|\textit{Teoria}_k)P(\textit{Teoria}_k)\dfrac{1}{P(\textit{Osservazione})}
+\end{multline}
+\begin{description}
+\item $ P(\textit{Teoria}_k) $: probabilità a priori della $ \textit{Teoria}_k $ come ad esempio:
+\begin{itemize}
+\item $ \textit{Teoria}_0 \ (a,b)$: Legge lineare $ y = a +bx $
+\item $ \textit{Teoria}_1 \ (A,B)$: Legge esponenziale $ \log y = A +B\log x $
+\end{itemize}
+Sono a priori (i pregiudizi) dello scienziato assegnati sulla base delle conoscenze precedenti all'osservazione: \textbf{Soggettivo}.
+\item $ P(\textit{Osservazione}|\textit{Teoria}_k) $: probabilità di ottenere i risultati dell'esperimento se la $ \textit{Teoria}_k $ è vera: ogni $ \textit{Teoria}_k $ prevede una distribuzione limite dei possibili risultati delle osservazioni da cui si può calcolare la probabiolità della osservazione che si è verificata: \textbf{Oggettivo}.
+\item $P(\textit{Teoria}_k| \textit{Osservazione})  $: probabilità a posteriori della $ \textit{Teoria}_k $ dopo aver ottenuto l'osservazione. Se ci si dovesse accontentare di un numero proporzionale alla probabilità si può evitare di calcolare il fattore di normalizzazione. Ad esempio:
+\begin{itemize}
+\item Se fosse sufficiente costruire una classifica delle $ \textit{Teorie}_k $
+\item Selezione bayesiana del modello/teoria fra due teorie alternative:
+\begin{equation}
+\frac{ P(\textit{Teoria}_k | \textit{Oss})}{P(\textit{Teoria}_l | \textit{Oss})} = \frac{P(\textit{Oss}|\textit{Teoria}_k)}{P(\textit{Oss}|\textit{Teoria}_l)} \frac{P(\textit{Teoria}_k)}{P(\textit{Teoria}_l)}
+\end{equation}
+Dove:
+\begin{description}
+\item \begin{equation}
+\frac{ P(\textit{Teoria}_k | \textit{Oss})}{P(\textit{Teoria}_l | \textit{Oss})}
+\end{equation}
+è il rapporto delle probabilità a posteriori:
+\begin{itemize}
+\item $ \gg 1 $: fiducia maggiore nella $ \textit{Teoria}_k $
+\item $ \simeq 1 $: considero le teorie equivalenti
+\item $ \ll 1 $: fiducia maggiore nella $ \textit{Teoria}_l $
+\end{itemize}
+\item 
+\begin{equation}
+\frac{P(\textit{Oss}|\textit{Teoria}_k)}{P(\textit{Oss}|\textit{Teoria}_l)}
+\end{equation}
+è il Bayes factor ovvero quantifica come l'evidenza sperimentale cambia il rapporto dei priori:
+\begin{itemize}
+\item Gli esperimenti informativi hanno bayes factor: $ \ll 1 $ o $ \gg 1 $, gli esperimenti non informativi hanno bayes factor $ \simeq 1 $
+\item Il Bayes factor si usa al posto del test delle ipotesi che sono propri della interpretazione frequentistica
+\item é facilissimo comporre assieme l'evidenza postata da osservazioni indipendenti: l'osservazione complessiva è l'evento prodotto delle singole osservazioni:
+\begin{equation}
+\textit{Oss}_{tot} = \prod{P}_{oss_i}
+\end{equation}
+Se sono indipendenti allora 
+\begin{equation}
+P(\textit{Oss}_{tot}|\textit{Teo}_k) = \prod{P} P(\textit{Oss}_i|\textit{Teo}_k)
+\end{equation}
+e quindi il Bayes factor totale:
+\begin{equation}
+\prod{P}\textit{Bayes factor singole osservazioni}
+\end{equation}
+\end{itemize}
+\end{description}
+\end{itemize}
+\item 
+\begin{equation}
+\frac{P(\textit{Teoria}_k)}{P(\textit{Teoria}_l)}
+\end{equation}
+Questo termine di normalizzazione è uguale per tutte le $ \textit{Teorie}_k $. Legge di probabilità totale:
+\begin{equation}
+P(\textit{Oss}) = \sum\limits_k P(\textit{Oss}|\textit{Teo}_k)P(\textit{Teo}_k)
+\end{equation}
+Si sommano i contributi di tutte le possibili $ \textit{Teorie}_k $ alternative pesando con i priori. Può essere molto difficile da calcolare.
+\end{description}
+\subsection{Esempio: individui sani/malati}
+Supponiamo il lo spazio campionari composto da una popolazione di individui che a loro volta possono essere sani o malati. Tramite un test di diagnostica si ottengono due risultati possibili:
+\begin{itemize}
+\item +: c'è problema
+\item  -: non c'è problema
+\end{itemize}
+Bisogna conoscere com'è collaudato il test ovvero determinare due parametri: $ P(+|M) $ e $ P(+|\textit{Sani}) $. Dai test clinici risulta:
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline  & Sani & M \\ 
+\hline + & $ 0.5\% $ & $ 99\%  $\\ 
+\hline - & $ 99.5\% $ & $ 1\%  $ \\ 
+\hline  & $ 100\% $ &$  100\%  $\\ 
+\hline 
+\end{tabular} 
+\end{center}
+Dove $ 0.5 \% $ è la probabilità di falso allarme mentre $ 1 \% $ è la probabilità di falso disallarme.
+\begin{equation}
+P(M|+) = \frac{P(+|M)P(M)}{P(+)} = \frac{P(+|M)P(M)}{P(+|M)P(M)+P(+|\mathcal{S})P(\mathcal{S})}
+\end{equation}
+Dove $ P(M) $ e $ P(\mathcal{S}) $ sono a priori.
+\begin{itemize}
+\item Ipotesi tranquilla:
+\begin{equation}
+\begin{cases}
+P(M)= 10^{-3} \\
+P(\textit{Sani}) = 99.9 \%
+\end{cases}
+\end{equation}
+\begin{equation}
+P(M|+) = \frac{0.99 \ 10^{-3}}{0.99 \ 10^{-3} + 5 \ 10^{-3} \ 0.999}\simeq\frac{1}{6}
+\end{equation}
+Il test non è risolutivo.
+\begin{equation}
+P(S|+) = 1 - P(M|+) = \frac{5}{6}
+\end{equation}
+\item Ipotesi di epidemia:
+\begin{equation}
+\begin{cases}
+P(M)= 10 \% \\
+P(\textit{Sani}) = 90 \%
+\end{cases}
+\end{equation}
+\begin{equation}
+P(M|+) \simeq 96 \%
+\end{equation}
+\begin{equation}
+P(S|M)\simeq 4 \%
+\end{equation}
+\`{E} un risultato già più conclusivo.
+\end{itemize}
+\begin{itemize}
+\item Importanza dei priori sul risultato
+\item $ P(M|+) \qquad P(\textit{Sani}|+)$ ovvero i posteriori riassumono la fiducia dopo aver eseguito l'osservazione. \\
+I posteriori:
+\begin{itemize}
+\item dipendono fortemente dai priori
+\item devono diventare i nuovi priori per l'osservazione successiva.
+\end{itemize}
+\end{itemize}
+Siano $ Test_1 $ e $ Test_2 $ due esperimenti di risultati possibili rispettivamente: $ \{+_1,-_1\} $ e $ \{+_2,-_2\} $ da cui l'osservazione complessiva è :
+\begin{equation}
+\begin{Bmatrix}
+ +_1+_2 & +_1-_2 \\
+-_1+_2 & -_1-_2
+\end{Bmatrix}
+\end{equation}
+Applico il teorema di Bayes sull'osservazione complessiva:
+\begin{equation}
+P(M|+_1+_2) :=\frac{P(+_1+_2|M)P(M)}{P(+_1+_2)} \stackrel{(\dag)}{=} \frac{P(+_2|M+_1)}{P(+_2|+_1)}\frac{P(+_1|M)P(M)}{P(+_1)} \label{eq_Teorema di bayes oss complessiva}
+\end{equation}
+\textit{Dove su $ (\dag) $ è stato sfruttato il fatto che:}
+\begin{eqnarray}
+P(+_1 +_2 |M) = P(+_1|M+_1)P(+_1|M) \\
+P(+_1+_2) = P(+_2| +_1) P(+_1)
+\end{eqnarray}
+Dalla \eqref{eq_Teorema di bayes oss complessiva}
+\begin{description}
+\item \begin{equation}
+\frac{P(+_1|M)P(M)}{P(+_1)}  = P(M|+_1)
+\end{equation}
+Ovvero i posteriori della osservazione precedente.
+\item \begin{equation}
+P(M|+_1+_2)=\frac{P(+_2|M)}{P(+_2)} P(M+_1)
+\end{equation}
+Dove 
+\begin{equation}
+\frac{P(+_2|M)}{P(+_2)} = \frac{P(+_2|M+_1)}{P(+_2|+_1)}
+\end{equation}
+\end{description}
+Il teorema di Bayes dell'osservazione complessiva si ricava sempre dalle definizioni di probabilità condizionata applicate a prodotto di eventi:
+\begin{equation}
+P(M|+_1+_2) = \frac{P(+_1+_2M)}{P(+_1+_2)} = \frac{P(+_1+_2|M)P(M)}{P(+_2|+_1)P(+_1)}
+\end{equation}
+Dal punti di vista della Bayesian model selection
+\begin{equation}
+\frac{P(M|+)}{P(\mathcal{S}|+)} = \frac{P(+|M)}{P(+|S)}\frac{P(M)}{P(S)}
+\end{equation}
+Dove:
+\begin{description}
+\item \begin{equation}
+\frac{P(M|+)}{P(\mathcal{S}|+)} 
+\end{equation}
+\begin{itemize}
+\item $ \ll 1\Rightarrow$ Ipotesi $ M $ preferita
+\item $ \gg 1\Rightarrow$ Ipotesi $ S $ preferita
+\end{itemize}
+\item 
+\begin{equation}
+\frac{P(+|M)}{P(+|S)}
+\end{equation}
+bayes factor ($ \simeq 200 $ per l'esempio precedente)
+\item \begin{equation}
+\frac{P(M)}{P(S)}
+\end{equation}
+Rapporto dei priori.
+\end{description}
+Per eseguire più osservazioni indipendenti:
+\begin{align}
+\frac{P(M|+_1+_2)}{P(S|+_1+_2)} =& \frac{P(M+_1+_2)/P(+_1+_2)}{P(s+_1+_2)/P(+_1+_2)} = \frac{P(+_1+_2|M)P(M)}{P(+_1+_2|S)P(S)}\\
+= & \frac{P(+_1|M)}{P(+_1|S)} \frac{P(+_2|M)}{P(+_2|S)} \frac{P(M)}{P(S)}
+\end{align}
+Dove
+\begin{equation}
+\frac{P(+_1|M)}{P(+_1|S)} \frac{P(+_2|M)}{P(+_2|S)}
+\end{equation}
+\`{E} il bayes factor complessivo di esperimenti indipendenti, è semplicemente il prodotto del bayes factors dei singoli esperimenti.
+\chapter{Calcolo combinatorio e prove ripetute} \index{Calcolo combmbinatorio}
+\section{Calcolo combinatorio}
+Lo scopo del calcolo combinatorio, nel nostro caso, è di saper calcolare il numero di esiti che appartengono ad uno spazio campionario:
+\begin{itemize}
+\item interpretazione classica della probabilità
+\item Applicazioni alla prove ripetute: esperimenti condotti nelle medesime condizioni e indipendenti tra loro.
+\end{itemize}
+Vi sono applicazioni importanti del calcolo combinatorio in meccanica statistica.
+\subsection{Introduzione}
+Consideriamo lo spazio campionario $ \mathcal{S} = \bigcup\limits_{i = 1}^NS_i$ con $ \{S_i\} $ eventi incompatibili considerando $ E_i $ evento di $ S_i $. L'evento generale in $ \mathcal{S} $ è 
+\begin{equation}
+E = \left\lbrace E_1,E_2,E_3, \dots , E_N \right\rbrace 
+\end{equation}
+Quanti sono gli eventi possibili di $ \mathcal{S} $?
+\begin{equation}
+N_\mathcal{S} = N_{S1} \times  N_{S2} \times  N_{S3} \times  N_{S4} \times \dots  N_{SN} = \prod \limits_{i = 1}^{N} N_{Si}
+\end{equation}
+\subsubsection{Esempi}
+\begin{itemize}
+\item Consideriamo i possibili numeri di telefono a $ 6 $ cifre:
+\begin{equation}
+N_{Si} = 10 \qquad \Rightarrow N_S = 10^6
+\end{equation}
+\item Consideriamo le possibile triplette di basi azotate\footnote{Sono i "caratteri" con cui è scritto il nostro gene} ovvero adenina guanina timina citosina
+\begin{equation}
+N_S = 4^3 = 64
+\end{equation}
+\item Consideriamo le possibile combinazioni di $ 20 $ aminoacidi per fare una proteina "piccola" ($ \sim 10^2 $ aminoacidi)
+\begin{equation}
+N_s \simeq 20^{100} = 10^{100} 2^{100} = 10^{100} 10^{(\log_{10}2)100} = 10^{100} 10^{30}
+\end{equation}
+\end{itemize}
+\subsection{Permutazioni} \index{Calcolo combmbinatorio! Permutazioni}
+Per \textbf{permutazione} di $ N $ oggetti si intende il numero di modi diversi in cui si può ordinare $ N $ oggetti.
+\begin{equation}
+P_N := N(N-1)(N-2)\dots1 = N!
+\end{equation}
+Il primo termine del fattoriale indica in quanti modi diversi si può prendere $ N $ oggetti, il secondo termine indica i modi per prendere $ N -1 $ oggetti e così via.
+\subsection{Disposizioni} \index{Calcolo combmbinatorio! Disposizioni}
+Per \textbf{disposizioni} di $ N $ oggetti \textit{di classe $ K $} o \textit{da $ K $ a $ K $} si indica il numero di modi in cui è possibile formare un gruppo di $ K $ oggetti a partire da $ N $, contando come diverse le realizzazioni che differiscono anche solo per l'ordine dei $ K $ oggetti.
+\begin{equation}
+D_{N,K} := N(N-1)(N-2)\dots (N-K+1) = \frac{N!}{(N-K)!} = \frac{P_N}{P_{N-K}}
+\end{equation}
+Il valore minimo delle disposizioni si ha per $ K = 0 $:
+\begin{equation}
+D_{N,0} = 1
+\end{equation}
+Per $ K = 1 $
+\begin{equation}
+D_{N,1} = N
+\end{equation}
+Il valore massimo si ha per $ K = N $
+\begin{equation}
+D_{NN} = P_N = N!
+\end{equation}
+Quando si fa uso delle disposizioni bisogna attenersi a due condizioni:
+\begin{itemize}
+\item considerare gli oggetti distinguibili tra loro
+\item considerare rilevante l'ordine di comparizione/realizzazione
+\end{itemize}
+\subsubsection{Esempio}
+Il numero di possibilità della graduatoria di un podio di una gare con $ N $ partecipanti
+\begin{equation}
+D_{N,3} = N(N-1)(N-2)
+\end{equation}
+Per esempio se la gara fosse da $ 8 $:
+\begin{equation}
+D_{8,3} = 336
+\end{equation}
+\subsection{Combinazioni} \index{Calcolo combmbinatorio! Combinazioni}
+Per combinazioni di $ N $ oggetti \textit{di classe $ K $} o \textit{da $ K $ a $ K $} si indica il modo in cui su può comporre un gruppo di $ K $ oggetti a partire da $ N $, considerando equivalenti i modi che differiscono soltanto per l'ordine all'interno del grippo di $ K $.
+\begin{equation}
+C_{N,K}:= \frac{D_{N,K}}{P_K} = \frac{N!}{K! (N-K)!}
+\end{equation}
+\begin{equation}
+C_{N,K}:= \binom{N}{K}
+\end{equation}
+La definizione è simmetrica per scambio tra $ K $ e $ N-K $:
+\begin{equation}
+C_{N,K} = C_{N,N-K}
+\end{equation}
+\begin{equation}
+C_{N,0} = 1 \qquad C_{N,N} = 1
+\end{equation}
+$ C_{N,K} $ ha massimo per $ K \sim \frac{N}{2} $
+Le combinazioni si utilizzano quando:
+\begin{itemize}
+\item Si estraggono oggetti indistinguibili tra loro
+\item L'applicazione non guarda l'ordine di estrazione
+\end{itemize}
+Ovviamente, il coefficiente binomiale è definito sempre per $ K \leq N $
+\subsubsection{Esempi}
+\begin{itemize}
+\item Tombola: $ 90 $ oggetti, semplifichiamo fissando $ M $ estrazioni. Che probabilità ho di fare cinquina con $ M\geq 5  $? Non interessa l'ordine delle estrazioni, lo spazio campionario è formato da $ C_{90,M} $ esiti. Quanti esiti sono favorevoli? Fare cinquina implica bloccare $ 5 $ numeri del gruppo di $ M $ numeri $ \Rightarrow $ numero di modi in cui i restanti $ M-5 $ possono essere estratti:
+\begin{equation}
+C_{90-5,M-5} = \binom{90-5}{M-5}
+\end{equation}
+\begin{equation}
+P_{\textit{Cinquina}}(M) = \dfrac{\binom{90-5}{M-5}}{\binom{90}{M}}
+\end{equation}
+\item Modi diversi per formare i gruppi di laboratorio da $ 3 $ supponendo $ 75 $ studenti. Il primo gruppo sarà composto così:
+\begin{equation}
+C_{75,3} = \frac{75\,74\,73}{3!}
+\end{equation}
+Il secondo gruppo
+\begin{equation}
+C_{72,3} = \frac{72 \, 71 \, 70}{3!}
+\end{equation}
+E via così tutti gli altri, si ottiene quindi:
+\begin{equation}
+\frac{75}{3!^{25}}
+\end{equation}
+Poiché non interessa l'ordine con cui vengono formati i gruppi si corregge la precedente così da ottenere:
+\begin{equation}
+\frac{75}{3!^{25}25!} \sim 6 \times 10^{64}
+\end{equation}
+\end{itemize}
+\section{Applicazione alle prove ripetute}
+Applicheremo adesso il calcolo combinatorio alle prove ripetute, in particolare, a prove ripetute indipendenti di una osservazione in condizioni identiche.
+\subsection{Distribuzione di probabilità binomiale o di Bernoulli} \index{Distribuzione! Variabile aleatoria discreta! Binomiale} \index{Distribuzione! Variabile aleatoria discreta! di Bernoulli}
+Il modo più semplice di classificare il risultato di una singola prova è di considerare lo spazio campionario $ S_1 $:
+\begin{equation}
+S_1 := A+ \bar{A}
+\end{equation}
+Sulla \textbf{singola prova} $ P(A) $ è fissata e $ P(\bar{A})=1-P(A) $. Su \textbf{più prove ripetute} abbiamo le seguenti relazioni:
+\begin{itemize}
+\item $ \mathcal{S}  =  \bigcup\limits_i S_i$ con $ S_i $ spazio campionario della prova i-esima
+\item Il possibile risultato è una n-tupla\footnote{Per tupla si intende una collezione di $ N $ oggetti} ad esempio:
+\begin{equation}
+(A,A,\bar{A}, A ,\bar{A}, \dots)
+\end{equation}
+Abbiamo quindi $ 2^N $ possibili esiti.
+\item Per calcolare la probabilità che si sia verificato l'esito $ A $ $ K $ volte su $ N $ tentativi è:
+\begin{equation}
+P(A)^K P(\bar{A})^{N-K}
+\end{equation}
+\end{itemize}
+Qual è quindi la probabilità di ottenere $ K $ volta $ A $ su $ N $ tentativi? \textit{K su N successi} è un evento che raccoglie tutti gli esiti in cui a si verifica $ K $ volte:
+\begin{align}
+P(\textit{K successi su N}) =& P \left( \sum\textit{Esiti corrispondenti}\right) \\
+=& \sum P(\textit{Esito in cui A si è verificato K volte})
+\end{align}
+\begin{equation}
+= [P(A)^KP(\bar{A}^{N-K})](\textit{numero esiti corrisponendi a K successi su N})
+\end{equation}
+A patto che:
+\begin{itemize}
+\item Gli eventi $ A $ siano indistinguibili tra loro
+\item La domanda si riferisce a \textit{K successi su N} e non fa alcun riferimento all'ordine delle estrazioni
+\end{itemize}
+Il numero di esiti corrispondenti è una distribuzione di tipo binomiale quindi:
+\begin{equation}
+P(\textit{K successi su N};N,P(A)) = \binom{N}{K}P(A)^K P(\bar{A})^{N-K} \label{eq_Def distribuzione di probabilità binomiale}
+\end{equation}
+Il che ci porta ad introdurre la distribuzione di probabilità binomiale o di Bernoulli ovvero la \eqref{eq_Def distribuzione di probabilità binomiale}.
+La distribuzione di probabilità binomiale è una funzione di una variabile discreta $ K $ e dipende da $ 2 $ parametri: 
+\begin{itemize}
+\item $ N :=$ \textit{Numero di prove}
+\item $ P(A):= $\textit{Probabilità di successo nella singola prova}
+\end{itemize}
+\subsection{Distribuzione di probabilità multinomiale} \index{Distribuzione! Variabile aleatoria discreta! Multinomiale}
+Nel caso invece si volesse considerare più di $ 2 $ eventi alternativi in ogni singola prova ovvero:
+\begin{equation}
+A_i \cap A_j = \phi \qquad \forall i \neq j
+\end{equation}
+$ m $ eventi e
+\begin{equation}
+\bigcup \limits_{i = 1}^{m} = \mathcal{S}
+\end{equation}
+qual è la probabilità che si verifichino $ K_1 $ volte $ A_1 $, $ K_2 $ volte $ A_2 $ e così via su $ N $ tentativi?
+\begin{itemize}
+\item Un esito elementare corrispondente a $ K_1 $ volte $ A_1 $ \dots, ha possibilità:
+\begin{equation}
+P(A_1)^{K_1} P(A_2)^{K_2} \dots P(A_m)^{K_m}
+\end{equation}
+Dove 
+\begin{equation}
+\sum\limits_{i = 1}^{m} K_i =N
+\end{equation}
+\item Il numero di esiti corrispondenti ad una n-tupla $ K_1,K_2,K_3\dots K_m $ si contano con le combinazioni:
+\begin{align}
+& \binom{N}{K_1} \binom{N-K_1}{K_2}\binom{N-K_1-K_2}{K_3} \dots \binom{K_m}{K_m} \\
+ & =  \frac{N!}{(N-K_1)!K_1!} \frac{(N-K_1)}{(N-K_1-K_2)!K_2!} \frac{(N-K_1-K_2)!}{(N-K_1-K_2-K_3)!K_3!} \dots 1 \\
+ & =  \frac{N!}{\prod\limits_i^m K_i !}
+\end{align}
+\end{itemize}
+Componendo questi due risultati si ottiene la distribuzione multinomiale definita come:
+\begin{equation}
+P(K_1,K_2, \dots K_m;N,P(A_1),P(A_2),\dots P(A_m)) :=\frac{N!}{\left( \prod\limits_{i = 1}^{m}K_i\right)! }\prod\limits_{i = 1}^{m}P(A_i)^{K_i}
+\end{equation}
+Questa distribuzione dipende da più variabili $ K_1 , K_2 \dots $ ed è funzione dei parametri:
+\begin{itemize}
+\item $ N:= $\textit{Numero di prove}
+\item $ P(A_i) :=$ \textit{Probabilità che $ A_i $ si verifichi}
+\end{itemize}
+$ K $ e $ K_1, K_2, \dots , K_m $ sono esempi di variabile aleatorie
+\chapter{Variabili aleatorie} \index{Variabile aleatorie}
+Per variabile aleatoria si intende una grandezza che assume valori casuali in maniera non predicibile.
+\section[Distribuzione aleatoria discreta]{Distribuzione di probabilità di una variabile \\aleatoria discreta} \index{Distribuzione! Variabile aleatoria discreta}
+Una variabile aleatoria discreta è tale se:
+\begin{itemize}
+\item il dominio è un insieme di valori discreti
+\item in numero di valori può essere finito o infinito
+\end{itemize}
+Misure dominate da errori risoluzione sono variabili aleatorie discrete.\\
+La distribuzione di probabilità di una variabile aleatoria discreta si ottiene associando ad ogni possibile valore della variabile aleatoria una probabilità, soddisfando la condizione di normalizzazione per qualunque distribuzione:
+\begin{equation}
+P(\mathcal{S})=1 \Leftrightarrow \sum\limits_{k \in \textit{Dominio}}P(K)=1
+\end{equation}
+In caso contrario non soddisferebbe il secondo assioma e quindi non sarebbe una probabilità.\\
+Si dice $ F(K) $ funzione cumulativa di probabilità della variabile aleatoria $ K $ se: \index{Distribuzione! Variabile aleatoria discreta! Funzione cumulativa}
+\begin{equation}
+F(K'):=P(K\leq K') = \sum\limits_{K \leq K'}P(K)
+\end{equation}
+Osserviamo immediatamente che:
+\begin{itemize}
+\item $ F(K) $ è una funzione a gradini dove $ gradino_K = P(K) $ ovvero la probabilità di ottenere  il valore $ K $
+\item $ F(K) $ è una funzione strettamente crescente in particolare:
+\begin{itemize}
+\item $ F(K')=0 $ se $ K' < \min\{K\} $
+\item $ F(K')=1 $ se $ K' \geq \max\{K\} $
+\end{itemize}
+\end{itemize}
+Che risponde a pieno in quanto distribuzione di variabile aleatoria è la binomiale
+\subsection{Distribuzione binomiale} \index{Distribuzione! Variabile aleatoria discreta! Binomiale}
+La distribuzione binomiale è una distribuzione di variabile aleatoria discreta $ K \in \{0,1,,N\}$ ed è definita:
+\begin{equation}
+P(K;N,P(A)) := \frac{N!}{K!(N-K)!}P(A)^K P(\bar{A}^{N-K})
+\end{equation}
+Associando $ p = P(A) $ e $ q = 1-p $ si può scrivere in forma compatta come:
+\begin{equation}
+P(K;N,p) = \frac{N!}{K!(N-K)!}p^K q^{N-K}
+\end{equation}
+Osserviamo che verifica la condizione di normalizzazione in quando
+\begin{equation}
+\sum\limits_{K = 0}^{N}\binom{N}{K}p^kq^{N-K}=P(p+q)^N=1
+\end{equation}
+La speranza matematica invece è:
+\begin{equation}
+m{K} := <K> = Np
+\end{equation}
+Infatti:
+\begin{align}
+<K> &= \sum\limits_{K = 1}^{N}K\binom{N}{K}p^Kq^{N-K} = Np \sum\limits_{K = 1}^{N} \frac{(N-1)!}{(K-1)!(N-K)!}p^{K-1}q^{N-K} \\
+& \stackrel{(\dag)}{=}Np \sum\limits_{S = 0}^{N-1}\frac{(N-1)!}{S!(N-1-S)!}p^Sq^{N-1-S} \\
+& \stackrel{(\ddag)}{=} Np
+\end{align}
+\textit{Dove su $ (\dag) $ ci si è serviti della sostituzione $ S  \stackrel{(S)}{=} K-1 $ e dell'uguaglianza $ N-K = N-1-(K-1)=N-1-S $ sull'esponente di $ q $. \\Su $( \ddag) $ invece si è osservato che il termine della binomiale è la condizione di normalizzazione e quindi unitaria.}\\
+Possiamo quindi osservare che se consideriamo $ P_A^* = \frac{K}{N} $ otteniamo che:
+\begin{equation}
+m[P_A^*]= m \left[ \frac{K}{N}\right]  = \frac{1}{N}m[K] = \frac{Np}{N}=p
+\end{equation}
+Cioè la media della frequenza campionaria di $ A $ è la probabilità di realizzazione di $ A $ nella singola prova.\\
+La varianza della variabile aleatoria binomiale $ D[K]$ invece si calcola:
+\begin{equation}
+D[K] \stackrel{(\dag)}{=} m[(k-m[k])^2]=m[K^2]-m^2[K] = Npq
+\end{equation}
+\textit{Dove su $ (\dag) $ ci si è ricondotti al risultato del capitolo \ref{Interpretazione della varianza campionaria}}
+\begin{align}
+m[K^2] & = \sum\limits_{K = 0}^{N}K^2P(K;N,p) = \sum\limits_{K = 1}^{N}K \frac{N!}{(K-1)!(N-K)!}p^Kq^{N-K} \\
+& \stackrel{(\dag)}{=} Np \sum\limits_{S = 0}^{N-1}(S+1)\frac{(N-1)!}{S!(N-1-S)!}p^Sq^{N-1-S} \\
+& = Np\left\lbrace \sum\limits_{S = 0}^{N-1} S \binom{N-1}{S}p^Sq^{N-1-S}+\sum\limits_{S = 0}^{N-1}\binom{N-1}{S}p^Sq^{N-1-S} \right\rbrace \\
+& \stackrel{(\ddag)}{=} Np\left\lbrace (N-1)p  +1 \right\rbrace = Np \{Np+1-p\}
+\end{align}
+\textit{Dove su $ (\dag) $ ci si è serviti della sostituzione $ S  \stackrel{(S)}{=} K-1 $\\ 
+Su $ (\ddag) $ invece si è sfruttato il fatto che il primo termine è $ m[S]=(N-1)p $ mentre il secondo è la condizione di normalizzazione}
+\\
+In conclusione si ottiene che:
+\begin{equation}
+D[K]= Np\{Np+q\}-(Np)^2=Npq
+\end{equation}
+In termini di incertezza relativa:
+\begin{equation}
+\frac{\sigma[K]}{<k>} = \frac{\sqrt{Npq}}{Np} = \frac{\sqrt{q}}{\sqrt{Np}}
+\end{equation}
+Si osserva che l'incertezza è $ \propto \sqrt{N} $ e quindi la binomiale si stringe al crescere di $ N $ in termini di incertezza relativa
+\subsubsection{Applicazioni agli istogrammi} \index{Istogrammi! Applicazione della binomiale} \index{Distribuzione! Variabile aleatoria discreta! Binomiale! Applicazione agli istogrammi}
+Nel caso degli istogrammi è possibile applicare la distribuzione binomiale a patto che vi siano $ N $ misure indipendenti interpretando il conteggio di ogni bin come una variabile aleatoria binomiale del tipo:
+\begin{equation}
+P(n_j^*;N,p)
+\end{equation}
+In particolare lo stimatore di speranza matematica $ m[n_j^*] $ è per definizione:
+\begin{equation}
+m[n_j^*]=Np_j
+\end{equation}
+Mentre lo stimatore di scarto tipo è:
+\begin{equation}
+\sigma[n^*_j] = \sqrt{Np_j(1-p_j)} \stackrel{(\dag)}{\simeq} \sqrt{Np_j} = <N_j^*>
+\end{equation}
+\textit{Dove su $ (\dag) $ si è ipotizzato di avere sufficienti bin tali che: $ p_j\ll1 $} \\
+Si conclude quindi con:
+\begin{equation}
+n_j^* = Np_j \pm \sqrt{Np_j} = <n_j^*> \pm \sqrt{<n_j^*>}
+\end{equation}
+Ovvero l'intervallo d'incertezza tipo che ci si aspetta sul conteggio di ogni bin dell'istogramma\footnote{Ecco svelato il motivo per cui è bene scegliere un $ \Delta X_j \sim \sqrt{n} $ (si veda la sezione \ref{Istogrammi, scelta del binning})}\\
+Per istogrammi normalizzati in altezza ricordiamo che:
+\begin{equation}
+p_j^* = \frac{n^*_j}{N}
+\end{equation}
+Da cui si ottiene rispettivamente la speranza matematica e lo scarto tipo:
+\begin{eqnarray}
+m[p_A^*] = P(A) \\
+\sigma[p_A^*] \propto \frac{1}{\sqrt{N}} \xrightarrow{N\to \infty}0
+\end{eqnarray}
+Risulta notevole che lo scarto si riduca in proporzione alla radice di $ N $, infatti, questo risultato è una delle tante versioni della legge dei grandi numeri per cui \index{Legge dei grandi numeri}
+\begin{equation}
+P(A) = \lim\limits_{N \to \infty} p_A^*
+\end{equation}
+Da interpretare però nel senso della probabilità ovvero una convergenza molto più debole cioè:
+\begin{equation}
+\forall \epsilon > 0 \qquad P(|p_A^*-P(A)|> \epsilon) \xrightarrow{N\to \infty} 0
+\end{equation}
+Cioè si tratta di convergenza di $ p_A^* \to P(A) $ in media quadratica
+\subsubsection{Applicazione alla verifica del valore della probabilità di un evento} \index{Distribuzione! Variabile aleatoria discreta! Binomiale! Applicazione al test di probabilità di un evento}
+Se si volesse verificare se un dado o una lotteria sono truccati, quante misure $ N $ sarebbero necessarie per determinare $ P(A) $ con un buon livello di accuratezza? Assumendo:
+\begin{itemize}
+\item $ p := P(A) :=$ \textit{come la probabilità teorica di }$ A $
+\item $ p^* :=$ \textit{frequenza campionaria di} $ A $
+\item $ \delta p :=$ \textit{tolleranza sul valore di probabilità.} Come ripreso più volte, nel caso si operi con incertezza tipo è necessario fissare un fattore di copertura $ k $ in particolare:
+\begin{equation}
+\delta p:=k\sigma[p^*]
+\end{equation}
+\item $ p_{vero} :=$ \textit{la probabilità vera sconosciuta di $ A $}
+\end{itemize} 
+Diremo che il controllo è andato a buon fine se:
+\begin{equation}
+P_{vero} \in[p-\delta p ; p+\delta p]
+\end{equation}
+Supponiamo che venga eseguito un test dell'ipotesi:
+\begin{equation}
+P_{vero} = p = m[p^*]
+\end{equation}
+Ci si chiede se
+\begin{equation}
+|p^*-p| \stackrel{?}{\leq} k \sigma[p^*] = \delta p
+\end{equation}
+Nel caso in cui:
+\begin{itemize}
+\item valga la disequazione si accetta le ipotesi
+\item non valga la disequazione si rigettano le ipotesi
+\end{itemize}
+Bisogna prestare attenzione ad $ p^* $ poiché non è una variabile di tipo gaussiana e quindi decade la probabilità corrispondente ad un certo fattore di copertura bensì è da calcolarsi a partire dalla binomiale:
+\begin{equation}
+K \frac{\sqrt{pq}}{\sqrt{N}} = \delta p \Rightarrow N = pq \frac{k^2}{(\delta p)^2}
+\end{equation}
+\subsection{Passeggiata a caso} \index{Distribuzione! Variabile aleatoria discreta!Binomiale! Passeggiata a caso} \index{Passeggiata a caso}
+La passeggiata a casa è una applicazione della distribuzione binomiale di interesse considerevole per i fisici: essa si propone di descrivere la posizione di una molecola, particella o ubriaco che si voglia, dopo un numero $ K $ di passi o urti. Supponiamo che $ d $ sia la distanza che viene percorsa ad ogni passo e che l'evento $ A $ sia associato al passo a destra, l'evento $ \bar{A} $ ovviamente sarà associato al passo a sinistra. Per semplicità di notazione assumiamo che:
+\begin{equation}
+p := P(A)
+\end{equation}
+Calcoliamo la posizione $ X_{N,p} $ dopo $ N $ passi con probabilità $ p $
+\begin{equation}
+X_{N,p} := Kd - (N-K)d = d(2K-N)
+\end{equation}
+Per quanto riguarda i parametri statistici invece:
+\begin{itemize}
+\item il valore atteso di $ X(K;N,p) $ si ottiene da:
+\begin{align}
+m[x]:&= \sum\limits_{k = 0}^{N}\left( d(2K-N) \right) \binom{N}{K}p^K q^{N-K} \\
+ &=d(2m[K]-N) = d(2Np-N) = Nd(p+p-1) \\
+ &=Nd(p-q)
+\end{align}
+Osserviamo che per $ p = q = \frac{1}{2} $ il valore atteso è $ 0 $ se invece $ p \neq q $ il valore atteso $ m[x]\propto N $.
+\item la varianza di  $ X(K;N,p) $ si ottiene invece da:
+\begin{equation}
+D[x] = m[(x-m[x])^2]
+\end{equation}
+Calcoliamo prima:
+\begin{align}
+x-m[x] &= d(2K-N) -Nd(p-q) \\
+&= d(2K-N-2Np+N) \\
+&= 2d(K-Np) \\
+ &= 2d(K-m[k])
+\end{align}
+Tornando ora a $ D(x) $ si ottiene che:
+\begin{align}
+D[x] &= m[(x-m[x])^2] \\
+&=m[4d^2(k-m[k])^2] \\
+&= 4d^2D[k] \\
+&= 4d^2Npq
+\end{align}
+Da cui
+\begin{equation}
+\sigma[x] = 2d \sqrt{Npq} \propto \sqrt{N}
+\end{equation}
+Ovvero con l'aumentare dei tentativi l'incertezza aumenta
+\end{itemize}
+Nei processi di diffusione la posizione di un oggetto è sempre più dispersa con il passare del tempo. 
+\begin{equation}
+N\sim \dfrac{\textit{tempo trascorso}}{\textit{tempo tipico fra due urti successivi}}
+\end{equation}
+Ogni scelta casuale nasce da un un urto dell'oggetto
+\begin{equation}
+d \sim \textit{cammino libero medio} = \textit{distanza tipica tra urti successivi}
+\end{equation}
+Nel caso a più dimensioni, se come spesso accade le equazioni del moto sono separabili per le direzioni cartesiane ortogonali ciascuna direzione è interpretabile come una passeggiata a casa unidimensionale.
+\subsection{Distribuzione di Poisson} \index{Distribuzione! Variabile aleatoria discreta! Di Poisson}
+La \textbf{distribuzione di Poisson}, definita come
+\begin{equation}
+P(K;a):= \frac{a^k}{K!}e^{-a}
+\end{equation}
+Dove $ a > 0 $ unico parametro della distribuzione e $ k \in \{0,1,,\infty\} $. Si osserva in particolare che la distribuzione di Poisson è il limite asintotico della distribuzione binomiale a condizione che:
+\begin{eqnarray}
+N\to \infty\\
+p \to 0
+\end{eqnarray} 
+In maniera tale da:
+\begin{equation}
+Np = \textit{costante} =: a
+\end{equation}
+Consideriamo infatti la binomiale $ P(K;N,p) $ ovvero
+\begin{equation}
+P(K;N,p) = \binom{N}{K}p^Kq^{N-K}
+\end{equation}
+e prendiamo:
+\begin{equation}
+p = \frac{a}{N}
+\end{equation}
+così che:
+\begin{align}
+P(K;N,p) =& \binom{N}{K}p^Kq^{N-K} \\
+=& \binom{N}{K}\left(\frac{a}{N} \right)^K \left(1- \frac{a}{N} \right)^{N-K} \\
+=& \frac{N(N-1)\dots (N-K+1)}{N^K}\frac{a^K}{K!}\left(1- \frac{a}{N} \right)^N \left(1- \frac{a}{N} \right)^{-K} \label{eq_binomiale to poisson}
+\end{align}
+Passando al limite:
+\begin{equation}
+\lim\limits_{N \to \infty} P(K;N,p) \stackrel{(\dag)}{=} \frac{a^K}{K!} e^{-a}
+\end{equation}
+\textit{Dove su $ (\dag) $ di è sfruttato il fatto che il primo termine di \eqref{eq_binomiale to poisson} tende ad $ 1 $, il terzo termine è lo sviluppo dell'esponenziale mentre l'ultimo termine tende ad $ 1 $.}\\
+\begin{itemize}
+\item Non tutte le binomiali tendono alla distribuzione di poisson infatti, considerando le prove ripetute in condizioni identiche in cui si tiene fitto l'evento in questione cioè:
+\begin{equation}
+p = \textit{costante} \Rightarrow m[K] = Np \xrightarrow{N \to \infty} \infty
+\end{equation}
+\item  Molte binomiali possono essere approssimate ad una poisson a condizione che:
+\begin{eqnarray}
+N \gg 1 \\
+p \ll 1
+\end{eqnarray}
+\item Verifichiamo la condizione di normalizzazione:
+\begin{equation}
+\sum\limits_{K = 0}^{\infty}\frac{a^K}{K!}e^{-a} = e^{-a}\sum\limits_{K = 0}^{\infty} \frac{a^K}{K!} \stackrel{(\dag)}{=} e^{-a} e^a = 1
+\end{equation}
+\textit{Dove su $ (\dag) $ si è sfruttata la definizione di esponenziale in serie}
+\item La speranza matematica:
+\begin{equation}
+m[K] = \sum\limits_{K = 0}^{\infty} K\frac{a^K}{K!}e^{-a} = a e^{-a} \sum\limits_{K = 1}^{\infty} \frac{a^{K-1}}{(K-1)!}e^{-a} \stackrel{(\dag)}{=} a
+\end{equation}
+\textit{Dove su $ (\dag) $ si è sfruttata la definizione in serie di esponenziale tramite la sostituzione $ s \stackrel{(S)}{=} K-1 $}
+\item Calcoliamo la varianza tramite:
+\begin{equation}
+D[K] = m[K^2]-m[K]^2 = a
+\end{equation}
+e quindi, calcoliamo
+\begin{align}
+m[K^2] &=  \sum\limits_{K = 0}^{\infty} K^2 \frac{a^K}{K!}e^{-a} = a  \sum\limits_{K = 0}^{\infty} K \frac{a^{K-1}}{(K-1)!}e^{-a} \\
+& \stackrel{(\dag)}{=} a \sum\limits_{S = 0}^{\infty} \left(S+1 \right) \frac{a^S}{S}e^{-a} \\
+& = a\left( \sum\limits_{S = 0}^{\infty} S \frac{a^S}{S!}e^{-a}+\sum\limits_{S = 0}^{\infty} \frac{a^S}{S!}e^{-a}  \right) \\
+& \stackrel{(\ddag)}{=} a(a+1) = a^2+a
+\end{align}
+\textit{Dove su $ (\dag) $ ci si è serviti della sostituzione $ S\stackrel{(s)}{=}k-1 $ mentre su $ (\ddag) $ si è sfruttato il fatto che il primo termine in parentesi è $ m[s] $ mentre il secondo è la condizione di normalizzazione.} \\
+Si conclude sostituendo all'equazione:
+\begin{equation}
+D[K] = m[K^2]-m[K]^2 =a^2+a-a^2 = a
+\end{equation}
+Osserviamo quindi che anche per la distribuzione di Poisson che $ \sigma[\frac{k}{m[k]}] = \frac{1}{\sqrt{a}}\xrightarrow{a \to \infty}0 $ ovvero che si stringe all'aumentare delle misure come per la binomiale.
+\end{itemize}
+\subsubsection{Processi di Poisson} \index{Processi di Poisson}
+Per processi di Poisson si intendono delle sequenze di eventi casuali descritti da una coordinata\footnote{Si penso ad esempio al tempo o ad una coordinata spaziale\dots} tale da soddisfare le seguenti:
+\begin{itemize}
+\item Gli eventi devono essere indipendenti tra loro.
+\item Il valore della coordinata di ciascun evento deve essere una variabile aleatoria continua distribuita con densità uniforme entro l'intervallo di coordinata in considerazione.
+\item All'interno dell'intervallo in considerazione la densità media degli eventi deve essere fissata:
+\begin{equation}
+m[k] = \lambda \Delta t = \textit{costante}
+\end{equation}
+Dove:
+\begin{description}
+\item[$ k $]$ := $\textit{ conteggio degli eventi con coordinata appartenete a }$ \Delta t $
+\item[$ \lambda $]$ := $ \textit{ densità media del processo}
+\item [$ \Delta t $]$ := $ \textit{ intervallo di coordinata considerato}
+\end{description}
+\end{itemize}
+Sotto queste condizioni il conteggio $ k $ degli eventi con coordinata appartenete ad un $ \Delta t $ è una variabile aleatoria poissoniana e quindi:
+\begin{equation}
+P(k; \lambda \Delta t) = \frac{\left( \lambda \Delta t \right)^k }{k!}\exp\left[{-\lambda \Delta t}\right]
+\end{equation}
+\subsubsection{Applicazione agli istogrammi}
+Un'alta applicazione utile della distribuzione di Poisson la si ritrova considerando gli istogrammi. Supponendo il binning fisso e quindi $ p_j $ fisso ciascuna $ n^*_j $ viene considerata come variabile aleatoria binomiale. Quest'ultima, è bene sottolineare, non converge per $ N \to \infty $ alla distribuzione di Poisson. Per ottenere una convergenza alla distribuzione di Poisson è necessario che il binning sia più fitto possibile così che al crescere di $ N $ si abbia che $ m[n_j^*] \sim \textit{costante}$. Così facendo si ottiene 
+\begin{equation}
+\begin{cases}
+N \to \infty \\
+P_j \to 0
+\end{cases}
+\end{equation}
+A condizione che $ N \gg 1 $ e che $ n_j^* $ sia \textit{simile} ad variabile aleatorie poissoniane allora:
+\begin{eqnarray}
+\forall \textit{bin}_j \qquad m[n_j^*] = a_j \\
+\sigma_{n_j^*} = \sqrt{a_j} \\
+P(n_j^*;a_j) \textit{ é di poisson}
+\end{eqnarray}
+L'incertezza relativa invece diviene:
+\begin{equation}
+\frac{\sigma_{n_j^*}}{a_j} = \frac{1}{\sqrt{a_j}}
+\end{equation}
+\section[Distribuzione aleatoria continua]{Distribuzione di probabilità di una variabile\\ aleatoria continua} \index{Distribuzione! Variabile aleatoria continua} \label{Distribuzione di variabile aleatoria continua}
+Per distribuzione di variabile aleatoria continua si intende l'osservazione di una variabile casuale che ha come dominio un insieme infinito non numerabile di valori. Possiamo considerare come variabili aleatorie continue:
+\begin{eqnarray}
+x &\in& \mathbb{R} \\
+x \in [x_1,x_2] &\in& \mathbb{R} \\
+x &\in& \mathbb{R}^n
+\end{eqnarray}
+Per distribuzione cumulativa di una variabile aleatoria continua si intende: \index{Distribuzione! Variabile aleatoria continua! Funzione cumulativa}
+\begin{equation}
+F(x') := P(x \leq x')
+\end{equation}
+Osserviamo le seguenti proprietà per la funzione cumulativa:
+\begin{enumerate}
+\item \`{E} adimensionale
+\item $ \max\{F(X)\} = 1 $
+\item $ \min\{F(X)\}=0 $
+\item $ F(X) $ è non decrescente cioè se $ x_1 \leq x_2 $ \label{Distribuzione di probabilità continua: non decrescenza}
+\begin{equation}
+\{x\leq x_1\} \subset \{x \leq x_2\} \Rightarrow P(x \leq x_1) \leq P(x \leq x_2) \Rightarrow F(x_1) \leq (x_2)
+\end{equation}
+\item Se $ x_1 \leq x_2 $ allora:
+\begin{equation}
+P(x_1 \leq x \leq x_2) = P(x\leq x_2) - P(x \leq x_1) = F(x_2) -F(x_1)
+\end{equation}
+\item $ F(x') $ è continua in $ x' $ se e soltanto se $ P(x = x') = 0 $ infatti:
+\begin{align}
+P(x = x') =& \lim\limits_{x_1 \to x'} P(X \leq x') - P(x \leq x_1) \\
+=& \lim\limits_{x_1 \to x'} F(x')-F(x_1) = 0 \Leftrightarrow F(x)\textit{ è continua}
+\end{align}
+Ad esempio se $ F(X) $ è continua su tutto il dominio:
+\begin{equation}
+P(x = x') = 0 \qquad \forall x' \in \textit{Dominio}
+\end{equation}
+Viceversa, una discontinuità di $ F(x) $ in $ x' $ implica:
+\begin{equation}
+P(x = x') \neq 0
+\end{equation}
+\end{enumerate}
+\subsection{Densità di probabilità} \index{Distribuzione! Variabile aleatoria continua! Densità di probaibilità} \index{Densità di probabilità}
+La distribuzione di densità di probabilità di $ F(x) $ è così definita:
+\begin{equation}
+f(x):= \frac{d}{dx}F(x) 
+\end{equation}
+Vale anche che:
+\begin{equation}
+F(x') = \int\limits_{\textit{inf del dominio}}^{x'}f(x)dx
+\end{equation}
+Si osserva che la densità di probabilità ha le seguenti caratteristiche:
+\begin{enumerate}
+\item Ha dimensione $ \frac{1}{[x]} $
+\item Soddisfa la condizione di normalizzazione infatti:
+\begin{equation}
+\int\limits_{\textit{dom f}}f(x)dx = 1
+\end{equation}
+\item $ f(x)\geq 0 $ poiché $ F(x) $ è non decrescente\footnote{Si veda l'osservazione \ref{Distribuzione di probabilità continua: non decrescenza} in riferimento alla sezione \ref{Distribuzione di variabile aleatoria continua}.}
+\item 
+\begin{equation}
+P(x_1 < x \leq x_2) = F(x_2)-F(x_1) = \int\limits_{x_1}^{x_2}f(x)dx
+\end{equation}
+\end{enumerate}
+\section[Parametri di caratterizzazione]{Parametri di caratterizzazione per distribuzione di probabilità} \index{Distribuzione! Parametri di caratterizzazione}
+Al fine di caratterizzare le distribuzione di probabilità sono state introdotte delle specifiche applicazioni. In particolare le seguenti sono adatte alla misura della posizione
+\begin{itemize}
+\item Speranza matematica\footnote{Si veda il capitolo \ref{Def: speranza matematica} nel caso di amnesia improvvisa}
+\item Mediana è il valore $ x_{med} $ tale che:
+\begin{equation}
+P(x \leq x_{med}) = 0.5 \Leftrightarrow (x_{med}) = 0.5
+\end{equation}
+In particolare:
+\begin{equation}
+x_{med} := F^{-1}(0.5)
+\end{equation}
+\item Moda è il valore $ x_{moda} $ tale che:
+\begin{equation}
+f(x_{moda}) = \max\{f(x)\}
+\end{equation}
+\`{E} bene sottolineare che possono esistere distribuzioni con più di un valore di moda dette appunto miltimodali.
+\end{itemize}
+Se invece si vuole esaminare la larghezza di una distribuzione è bene utilizzare:
+\begin{itemize}
+\item Varianza e quindi $ \sigma $
+\item Percentili
+\item Semi-larghezza a metà altezza 
+\item Larghezza a metà altezza
+\item Momenti della distribuzione.
+\end{itemize}
+\subsection{Momenti della distribuzione}
+I \textbf{momenti della distribuzione} possono essere di due tipi:
+\begin{itemize}
+\item \textbf{Momenti iniziali}, generalmente indicati con $ \alpha_s $ sono detti momenti iniziali di ordine $ s $ definiti come: \index{Distribuzione! Momenti iniziale}
+\begin{equation}
+\alpha_s := m[x^s]
+\end{equation}
+Hanno dimensione $ [x^s] $ e:
+\begin{itemize}
+\item Per variabili aleatorie continue è definito come:
+\begin{equation}
+\alpha_s := \int\limits_{\textit{dom}}x^s f(x) dx
+\end{equation}
+\item Per variabili aleatori discrete è definito come:
+\begin{equation}
+\alpha_s := \sum\limits_{x_j \in \textit{dom}}x_j^s P(x_j)
+\end{equation}
+\end{itemize}
+Bisogna prestare particolare attenzione perché non è assicurata l'esistenza di $ \alpha_s $ di un dato ordine per variabili aleatorie continue perché l'integrale potrebbe non convergere. Se esistessero tutti gli $ \alpha_s $ di ogni ordine, la loro conoscenza è equivalente alla conoscenza della densità di probabilità di $ f(x) $. \\Notare che $ \alpha_0 $ è la condizione di normalizzazione e quindi:
+\begin{equation}
+\alpha_0 := 1 
+\end{equation}
+$ \alpha_1 $ rappresenta invece la speranza matematica infatti:
+\begin{equation}
+\alpha_1 := \int xf(x)dx \qquad \sum x_jP(x_j)
+\end{equation}
+\item \textbf{Momenti centrati}, generalmente indicati con $ \mu_s $ sono detti momenti centrati di ordine $ s $ definiti come: \index{Distribuzione! Momenti centrati}
+\begin{equation}
+\mu_s := m[(x-m[s])^s]
+\end{equation}
+Hanno dimensione $ [x^s] $ e:
+\begin{itemize}
+\item Per variabili aleatorie continue è definito come:
+\begin{equation}
+\mu_s := \int\limits_{\textit{dom}}(x-m[x])^s f(x)dx
+\end{equation}
+\item Per variabili aleatorie discrete è definito come:
+\begin{equation}
+\mu_s := \sum\limits_{x_j \in \textit{dom}}(x_j-m[x])^sP(x_j)
+\end{equation}
+\end{itemize}
+Valuteremo ora i principali momenti centrati:
+\begin{enumerate}[start=0]
+\item $\mu_0 $ corrisponde alla condizione di normalizzazione quindi:
+\begin{equation}
+\mu_0 = 1
+\end{equation}
+\item $ \mu_1 $ invece è identicamente nullo infatti:
+\begin{align}
+\mu_1 :=& m[(x-m[x])] = \int(x-m[x])f(x)dx \\
+=& \int xf(x)dx - m[x]\int f(x)dx = m[x]-m[x] = 0
+\end{align}
+\item $ \mu_2 $ invece corrisponde alla varianza della distribuzione infatti:
+\begin{equation}
+\mu_2 := m[(x-m[x])^2] = D[x] = \sigma^2[x]
+\end{equation}
+\item $ \mu_3 $ misura l'asimmetria della distribuzione rispetto alla speranza matematica infatti è nullo nel caso di distribuzioni simmetriche:
+\begin{equation}
+\begin{split}
+\mu_3 &= \int\limits_{dom}(x-m[x])^3f(x)dx \\
+&=\int\limits_{-\infty}^{m[x]}(x-m[x])^3f(x)dx +\int\limits_{m[x]}^{\infty}(x-m[x])^3f(x)dx\\
+&\stackrel{(\dag)}{=} \int\limits_{-\infty}^{0}y^3f(x[m]+y) dy + \int\limits_{0}^{\infty}y^3f(x[m]+y) dy \label{eq_mu 3 e segno opposto}
+\end{split}
+\end{equation}
+\textit{Dove su $ \dag $ si è fatto uso della sostituzione $ y \stackrel{(s)}{=}x-m[x] $} \\
+Osserviamo infatti che se in \eqref{eq_mu 3 e segno opposto} gli integrali avessero segno opposto la distribuzione sarebbe simmetrica e quindi $ \mu_3 $ nullo. \\
+\item $ \mu_4 $ pesa molto di più le grandi fluttuazioni e quindi le code delle distribuzioni
+\end{enumerate}
+\end{itemize}
+\subsubsection{Coefficiente di asimmetrica} \index{Distribuzione! Coefficiente di asimmetria}
+Il \textbf{coefficiente di asimmetria}, definito come:
+\begin{equation}
+\mathcal{S}:= \frac{\mu_3}{\sigma^3}
+\end{equation}
+è adimensionale ed ha lo scopo do misurare gli sbilanciamenti a destra ($ \mathcal{S}> 0 $) o a sinistra $ (\mathcal{S}<0) $. Nel caso di distribuzioni come: \textit{gaussiana, densità uniforme e binomiale} a patto che $ p = q = 0.5 $
+Si ha che:
+\begin{equation}
+\mathcal{S} = 0
+\end{equation}
+Il che equivale a dire che sono simmetriche, in particolare, per la binomiale vale che:
+\begin{equation}
+\mu_3 = ,[(K-Np)^3] = Npq(p-q)
+\end{equation}
+Da cui
+\begin{equation}
+\mathcal{S} = \frac{q-p}{\sqrt{Npq}} \propto \frac{1}{\sqrt{N}} \xrightarrow{N \to \infty} 0
+\end{equation}
+Si osserva quindi che asintoticamente per un numero elevato di misura la binomiale si simmetrizza indipendentemente dal valore di $ p $. \\
+Anche per la distribuzione di Poisson:
+\begin{equation}
+\mathcal{S} = \frac{1}{\sqrt{a}} \xrightarrow{a \to \infty}0
+\end{equation}
+\subsubsection{Coefficiente di appiattimento} \index{Distribuzione! Coefficienti di appiattimento} \index{Distribuzione! Coefficiente di Kustosis}
+Il \textbf{Coefficiente di appiattimento} indicato generalmente con $\mathcal{A}$ e definito come:
+\begin{equation}
+\mathcal{A}:= \frac{\mu_4}{D^2} -3
+\end{equation}
+Si propone di misurare appunto quando una distribuzione è appiattita ovvero se le code della distribuzione sono più importanti $ (\mathcal{A}> 0 )$ o meno importanti $ (\mathcal{A}< 0) $ rispetto alla distribuzione gaussiana. Infatti per la distribuzione di Gauss si ha:
+\begin{equation}
+\frac{\mu_4}{D^2} = 3 \Rightarrow \mathcal{A} = 0
+\end{equation}
+In particolare, per la distribuzione binomiale si ha che:
+\begin{equation}
+\mu_4 = \sum\limits_{K = 0}^{N}(K-Np)^4P(K;N,p) = Npq (1+3Npq-6pq)
+\end{equation}
+e quindi
+\begin{equation}
+A = \frac{1-6pq}{Npq} \propto \frac{1}{N} \xrightarrow{N \to \infty}0
+\end{equation}
+Mentre per la distribuzione di Poisson
+\begin{equation}
+\mu_4 = 3a^2+a \Rightarrow \mathcal{A} = \frac{1}{\sqrt{a}} > 0 \xrightarrow{a \to \infty} 0
+\end{equation}
+Come nel caso precedente di coefficiente di asimmetria, anche in questo caso la binomiale e la poissoniana, per un numero elevato di misure, tendono alle caratteristiche della distribuzione gaussiana infatti si vedrà che per $ N \to \infty $ sia la binomiale che la distribuzione di possion diventano la distribuzione gaussiana.
+\subsubsection{Momenti della distribuzione di Poisson} \index{Parametri di caraterizzazione! Distribuzione di Poisson}
+Applicando ora quanto visto in precedenza i momenti della distribuzione di Poisson sono:
+\begin{itemize}
+\item Coefficiente di asimmetria:
+\begin{equation}
+\mu_3 = a \Rightarrow \mathcal{S} = \frac{\mu_3}{\sigma_3} = \frac{1}{\sqrt{a}} \xrightarrow{a \to \infty} 0
+\end{equation}
+\item Coefficiente di appiattimento:
+\begin{equation}
+\mu_4 = 3a^2+a \Rightarrow \mathcal{A}= \frac{\mu_4}{D_3}-3 = \frac{1}{a}>0
+\end{equation}
+Notiamo che per $ a \to \infty $ anche la distribuzione di Poisson tende alla gaussiana.
+\end{itemize}
+
+\cleardoublepage 
+\phantomsection
+\addcontentsline{toc}{chapter}{\indexname} 
+\printindex
+\end{document}
